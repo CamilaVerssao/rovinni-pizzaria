@@ -122,7 +122,7 @@ const routes = [
     path: '/order-payment',
     name: 'order-payment',
     component: OrderPaymentView
-  }
+  },
 ]
 
 const router = createRouter({

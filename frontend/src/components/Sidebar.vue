@@ -52,7 +52,7 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="triggerId">
                             <a class="dropdown-item" href="#">Perfil</a>
-                            <a class="dropdown-item" href="#">Sair</a>
+                            <a class="dropdown-item" href="#" @click="logout()">Sair</a>
                         </div>
                     </div>
                 </div>
@@ -63,12 +63,18 @@
 </template>
 
 <script>
+
+    import { Axios } from '@/configAxios';
+
     export default {
         data: () => ({
             
         }),
         methods: {
-            
+            async logout() {
+                await Axios.post('/logout');
+                this.$router.push('/login');
+            }
         }
     }
     
