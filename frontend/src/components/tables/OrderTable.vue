@@ -20,8 +20,8 @@
                         </button>
                     </td>     
                     <td>{{ formatData(pedido.createdAt) }}</td>
-                    <td>{{ getClienteId(pedido.clienteId) }}</td>
-                    <td>{{ getFuncId(pedido.funcionarioId) }}</td>
+                    <td>{{ pedido.nome }}</td>
+                    <td>{{ pedido.username ? pedido.username : 'Não' }}</td>
                     <td>R${{ pedido.total }}</td>
                     <td>{{ pedido.pagamento }}</td>
                     <td>{{ pedido.status }}</td>

@@ -17,6 +17,7 @@
                     <span class="input-group-text" id="basic-addon1"><font-awesome-icon :icon="['fas', 'lock']" style="color: #000000;" /></span>
                     <input type="password" class="form-control" placeholder="Senha" aria-label="Username" aria-describedby="basic-addon1" v-model="senha" required>
                 </div>    
+
                 <div class="botao d-grid gap-2">
                     <button class="btn btn-primary btn-lg" type="button" @click="login()">Log in</button>
                 </div>
@@ -24,6 +25,7 @@
                 <div class="options-content">
                     <p>Não tem uma conta? <a href="#/cadastro">Cadastre-se</a></p>
                 </div>
+
             </div>
         </div>
         <div class="right-side d-flex"></div>
@@ -42,18 +44,27 @@
         }),
         methods: {
             async login() {
-                
-                const data = {
-                    username: this.username,
-                    senha: this.senha
-                }
+                try {
+                    const data = {
+                        username: this.username,
+                        senha: this.senha
+                    }
 
-                if(this.username && this.senha) {
-                    await Axios.post('/login', data);
-                    this.$router.push('/');
+                    if(this.username && this.senha) {
+                        await Axios.post('/login', data);
+                        this.$router.push('/');
+                    }
+                    else {
+                        this.errorMessage = 'Preencha todos os campos.'
+                    } 
                 }
-                else {
-                    alert('Preencha todos os campos.');
+                catch(error) {
+                    if(error.response.data.error) {
+                        console.error('Erro no login:', error.response.data.messages);
+                    }
+                    else {
+                        console.error('Erro desconhecido:', error.message);
+                    }
                 }
             }
         }

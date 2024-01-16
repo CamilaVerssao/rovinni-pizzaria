@@ -8,7 +8,17 @@ const getById = async (id) => {
     return await db.getById(id, 'pizza_ingrediente');
 }
 const insert = async (object) => {
-    return await db.insert(object, 'pizza_ingrediente');
+    try {
+        return await db.insert(object, 'pizza_ingrediente');
+    }
+    catch(error) {
+        if (error.details) {
+            const errors = error.details.map((el) => el.message)
+            return { errors }
+          } else {
+            return { errors: [error.message] }
+          }
+    }
 }
 const update = async (id, object) => {
     if(!id) return;

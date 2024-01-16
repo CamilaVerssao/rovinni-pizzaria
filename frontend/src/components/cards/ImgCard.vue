@@ -1,7 +1,7 @@
 <template>
     <div id="card-content">
         <div class="card-img">
-            <img v-if="imageUrl" alt="Selected" />
+            <img v-if="imageUrl" alt="Selected" :src="this.imageUrl"/>
             <input type="file" ref="fileInput" @change="onFilePicked" accept="image/*" style="display: none">
             <button class="btn btn-info" @click="onPickFile">Upload File</button>
         </div>
@@ -13,23 +13,30 @@
 </template>
 
 <script>
+
+    import { Axios } from '@/configAxios';
+
     export default {
         data: () => ({
-            selectedFile: null
+            selectedFile: null,
+            image: null
         }),
         methods: {
             onPickFile () {
                 this.$refs.fileInput.click()
             },
-            onFilePicked (event) {
-                const files = event.target.files
-                let filename = files[0].name
-                const fileReader = new FileReader()
-                fileReader.addEventListener('load', () => {
-                    this.imageUrl = fileReader.result
-                });
-                fileReader.readAsDataURL(files[0]);
-                //this.image = files[0]
+            onFilePicked(event) {
+                const files = event.target.files;
+                if(files.length > 0) {
+                    this.image = files[0].name;    
+                    this.uploadImage();
+                }                
+            },
+            async uploadImage() {
+                const formData = new FormData();
+                formData.append('imagem', this.image);
+    
+                await Axios.post('/produto', formData);
             }
         }
     }

@@ -24,7 +24,7 @@
                             <h1 id="itens-number"><font-awesome-icon :icon="['fas', 'cart-shopping']" style="color: #000000;" /> {{ numItens }} itens</h1>
                             <div class="top-right">
                                 <div class="item-row d-flex right-position" v-for="carrinho in filterCart" :key="carrinho.id">
-                                    <p>{{ carrinho.nome }} {{ getSizeName(carrinho.tamanhoId) }}</p>
+                                    <p>{{ carrinho.nome }} {{ carrinho.tamanho }}</p>
                                     <p style="font-weight: bold;">R$ {{ carrinho.preco.toFixed(2) }}</p>
                                     <p style="font-weight: bold;">R$ {{ carrinho.totalCart.toFixed(2) }}</p>
                                     <button @click="deleteItem(carrinho.id)" id="x-btn"><font-awesome-icon :icon="['fas', 'xmark']" style="color: #000000;"/></button>
@@ -94,16 +94,7 @@
             async getSizes() {
                 const data = (await Axios.get('/tamanho')).data;
                 this.tamanhos = data;
-            },
-            getSizeName(id) {
-                if (!this.tamanhos || this.tamanhos.length === undefined) {
-                    return "Tamanho não encontrado";
-                }
-
-                const size = this.tamanhos.find(size => size.id === id);
-
-                return size ? size.nome : "";
-            },
+            }
         },
         computed: {
             filterCart() {
@@ -135,7 +126,6 @@
   },
   mounted() {
     this.getProducts();
-    this.getSizes();
     this.cart = Object.keys(sessionStorage);
     this.numItens = this.cart.length;
 

@@ -8,7 +8,17 @@ const getById = async (id) => {
     return await db.getById(id, 'pedido_item');
 }
 const insert = async (object) => {
-    return await db.insert(object, 'pedido_item');
+    try {
+        return await db.insert(object, 'pedido_item');
+    }  
+    catch(error) {
+        if (error.details) {
+            const errors = error.details.map((el) => el.message)
+            return { errors }
+          } else {
+            return { errors: [error.message] }
+          }
+    }   
 }
 const update = async (id, object) => {
     if(!id) return;

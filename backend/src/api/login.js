@@ -12,8 +12,6 @@ const insert = async(req, res) => {
             }); 
             return res.status(200).json({ user: user.id });
         }
-       
-
         throw new Error('Senha inválida');
     }
     catch (error) {

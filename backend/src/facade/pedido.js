@@ -1,14 +1,42 @@
 const db = require('../dbo/base');
 
 const get = async () => {
-    return await db.get('pedido');
+
+    const params = [{}];
+
+    const join = [
+        {
+            paramTo: 'pedido.funcionario_id',
+            paramFrom: 'funcionario.id',
+            type: 'leftJoin',
+            tableName: 'funcionario'
+        },
+        {
+            paramTo: 'pedido.cliente_id',
+            paramFrom: 'cliente.cliente_id',
+            type: 'leftJoin',
+            tableName: 'cliente'
+        }
+]
+
+    return await db.get('pedido', params, join);
 }
 const getById = async (id) => {
     if(!id) return;
     return await db.getById(id, 'pedido');
 }
 const insert = async (object) => {
-    return await db.insert(object, 'pedido');
+    try {
+        return await db.insert(object, 'pedido');
+    }
+    catch(error) {
+        if (error.details) {
+            const errors = error.details.map((el) => el.message)
+            return { errors }
+          } else {
+            return { errors: [error.message] }
+          }
+    }
 }
 const update = async (id, object) => {
     if(!id) return;

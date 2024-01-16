@@ -1,12 +1,20 @@
 const db = require('../config/db');
 
-const get = async(tableName, params) => {
-    let baseQuery = db(tableName).where('deleted_at', null);
+const get = async(tableName, params, joins) => {
+    let baseQuery = db(tableName).where(`${tableName}.deleted_at`, null);
 
     if(params) {
         params.forEach(param => {
             if(param.value && param.field){
                 baseQuery = baseQuery.where(param.field, param.value);
+            }
+        });
+    }
+
+    if(joins) {
+        joins.forEach(({ paramFrom, paramTo, type, tableName }) => {
+            if(paramFrom && paramTo && type) {
+                baseQuery = baseQuery[type](tableName, paramFrom, paramTo);
             }
         });
     }
@@ -30,7 +38,8 @@ const insert = async(object, tableName) => {
     const result = await db(tableName)
         .insert(object)
         .catch((error => {
-            console.log(error.message);
+            console.log(error);
+            return { errors: error.message }
         }));
 
         return await getById(result[0], tableName);
@@ -43,7 +52,8 @@ const update = async(id, object, tableName) => {
         .update(object)
         .where('id', id)
         .catch((error => {
-            console.log(error.message);
+            console.log(error);
+            return { errors: error.message }
         }));
 
     return result;

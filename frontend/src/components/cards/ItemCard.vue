@@ -1,9 +1,9 @@
 <template>
     <div class="all-content">
-        <div id="card-content" v-for="produto in filterProduct" :key="produto.id" @click="this.$emit('produtoClicado', produto)" > <!--se o card for bebida, não aparece a lista de ingredientes para editar-->
+        <div id="card-content" v-for="produto in produtos" :key="produto.id" @click="this.$emit('produtoClicado', produto)" > <!--se o card for bebida, não aparece a lista de ingredientes para editar-->
             <div class="card-img" @click="goToInfo(produto.id)"></div>
             <div class="card-info" @click="goToInfo(produto.id)">
-                <h1>{{ produto.nome }} {{ getSizeName(produto.tamanhoId) }}</h1>
+                <h1>{{ produto.nome }} {{ produto.tamanho  }}</h1>
                 <h2>R$ {{ produto.preco }}</h2>
             </div>
             <div class="buttons">
@@ -30,7 +30,7 @@
     export default {
         name: 'ItemCard',
         data: () => ({
-            tamanhos: null
+            produtos: null
         }),
         props: {
             detailHref: {
@@ -47,10 +47,6 @@
             goToInfo(id) {
                 this.$router.push(`/product-details/${id}`);
             },
-            async getSizes() {
-                const data = (await Axios.get('/tamanho')).data;
-                this.tamanhos = data;
-            },
             async deleteProduct(id) {
 
                 if (window.confirm("Tem certeza que deseja excluir?") === true) {
@@ -63,13 +59,9 @@
                 const produtoString = JSON.stringify(produto);
                 sessionStorage.setItem(id, produtoString);
             },
-            getSizeName(id) {
-                if (!this.tamanhos || this.tamanhos.length === 0) {
-                    return "Tamanho não encontrado";
-                }
-
-                const size = this.tamanhos.find(size => size.id === id);
-                return size ? size.nome : "";
+            async getProdutos() {
+                const data = (await Axios.get('/produto')).data;
+                this.produtos = data;
             },
             editProduct(id) {
                 this.$emit('editing', id);
@@ -90,7 +82,7 @@
             },
         },
         mounted(){
-            this.getSizes();
+            this.getProdutos();
         },
         components: {
             EditButton,

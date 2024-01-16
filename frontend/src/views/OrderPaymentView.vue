@@ -79,7 +79,6 @@
                 this.pedidos = data;
             },
             async confirmPayment() {
-                const cart = this.filterCart;
 
                 this.status = 'Concluído';
                 
@@ -87,9 +86,11 @@
                     pagamento: this.payment,
                     status: this.status,
                     total: this.total,
-                    funcionario_id: 1,
+                    funcionario_id: 5,
                     cliente_id: 1
                 }
+
+                console.log(this.total)
 
                 const pedido = (await Axios.post('/pedido', data)).data;
                 const pedidoId = pedido.id;
@@ -104,7 +105,7 @@
                         quantidade: productData.quantity
                     }
 
-                    (await Axios.post('/pedido_item', cartItem));
+                    await Axios.post('/pedido_item', cartItem);
                 }
 
                 sessionStorage.clear()
@@ -147,8 +148,6 @@
                     }
                     return false;
                 });
-
-                console.log(filteredCart)
 
 
                 filteredCart.map((prod) => {

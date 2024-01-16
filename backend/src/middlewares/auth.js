@@ -10,7 +10,7 @@ const authMiddleware = async(req, res, next) => {
             return res.sendStatus(401);
         }
         next()
-    }
+   }
 }
 
 module.exports =  authMiddleware;

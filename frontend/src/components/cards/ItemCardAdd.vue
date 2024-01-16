@@ -1,10 +1,10 @@
 <template>
     <div>
-        <div id="card-content" v-for="produto in filterProduct" :key="produto.id" @click="addItemToCart(produto)">
+        <div id="card-content" v-for="produto in produtos" :key="produto.id" @click="addItemToCart(produto)">
             <div class="card-img"></div>
             <div class="card-info">
-                <h1>{{ produto.nome }} {{ getSizeName(produto.tamanhoId) }}</h1>
-                <h2>R$ {{ produto.preco.toFixed(2) }}</h2>
+                <h1>{{ produto.nome }} {{ produto.tamanho }}</h1>
+                <h2>R$ {{ produto.preco }}</h2>
             </div>
         </div>
     </div>
@@ -18,7 +18,8 @@
         data: () => ({
            cart: null,
            qtd: 0,
-           tamanhos: null
+           tamanhos: null,
+           produtos: null
         }),
         props: {
             produtos: {
@@ -32,7 +33,10 @@
             }
         },
         methods: {
-
+            async getProducts() {
+                const data = await Axios.get('/produto');
+                this.produtos = data;
+            },
             addItemToCart(produto) {
 
                 if (!sessionStorage.getItem(produto.id)) {
@@ -47,19 +51,8 @@
                 sessionStorage.setItem(produto.id, produtoString);
 
                 window.location.reload();
-            },
-            async getSizes() {
-                const data = (await Axios.get('/tamanho')).data;
-                this.tamanhos = data;
-            },
-            getSizeName(id) {
-                if (!this.tamanhos || this.tamanhos.length === 0) {
-                    return "Tamanho não encontrado";
-                }
-
-                const size = this.tamanhos.find(size => size.id === id);
-                return size ? size.nome: "";
-            },
+            }
+            
         },
         computed: {
             filterProduct() {
@@ -77,9 +70,8 @@
             }
         },
         mounted() { 
-            this.getSizes();
             this.qtd = 0;
-           
+            this.getProducts();
         }  
     }
 </script>

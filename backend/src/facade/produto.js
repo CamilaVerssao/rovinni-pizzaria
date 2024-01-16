@@ -6,14 +6,31 @@ const get = async (query) => {
         value: query.tipo
     }];
 
-    return await db.get('produto', params);
+    const join = [{
+        paramTo: 'produto.tamanho_id',
+        paramFrom: 'tamanho.id',
+        type: 'leftJoin',
+        tableName: 'tamanho'
+    }];
+
+    return await db.get('produto', params, join);
 }
 const getById = async (id) => {
     if(!id) return;
     return await db.getById(id, 'produto');
 }
 const insert = async (object) => {
-    return await db.insert(object, 'produto');
+    try {
+        return await db.insert(object, 'produto');
+    }
+    catch(error) {
+        if (error.details) {
+            const errors = error.details.map((el) => el.message)
+            return { errors }
+          } else {
+            return { errors: [error.message] }
+          }
+    }
 }
 const update = async (id, object) => {
     if(!id) return;
