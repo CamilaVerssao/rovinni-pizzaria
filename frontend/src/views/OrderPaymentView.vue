@@ -52,7 +52,7 @@
 
     import Sidebar from '../components/Sidebar.vue'
     import Title from '@/components/Title.vue';
-    import OrderSummary from '@/components/OrderSummary.vue';
+    import OrderSummary from '../components/OrderSummary.vue';
 
     export default {
         data: () => ({
@@ -62,7 +62,9 @@
             produto: null,
             total: null,
             status: null,
-            pedidos: null
+            pedidos: null,
+            cookieValue: null,
+            funcionario: null
         }),
         components: {
             Sidebar,
@@ -86,11 +88,9 @@
                     pagamento: this.payment,
                     status: this.status,
                     total: this.total,
-                    funcionario_id: 5,
+                    funcionario_id: this.funcionario.id,
                     cliente_id: 1
                 }
-
-                console.log(this.total)
 
                 const pedido = (await Axios.post('/pedido', data)).data;
                 const pedidoId = pedido.id;
@@ -108,7 +108,7 @@
                     await Axios.post('/pedido_item', cartItem);
                 }
 
-                sessionStorage.clear()
+                sessionStorage.clear();
 
                 this.$router.push("/order-list");
             },
@@ -119,12 +119,17 @@
                     pagamento: this.payment,
                     status: this.status,
                     total: this.total,
-                    funcionario_id: 1,
+                    funcionario_id: this.funcionario.id,
                     cliente_id: 1,
                     deleted_at: new Date()
                 }
 
+                await Axios.post('/pedido', data);
+                
                 this.$router.push('/order');
+            },
+            async getFunc() {
+                this.funcionario = (await Axios.get(`/funcionario?id=${this.userValue}`)).data[0];
             }
         },
         computed: {
@@ -143,24 +148,26 @@
                             let obj = JSON.parse(sessionStorage.getItem(prod.id));
                             prod.totalCart = obj.totalCart;
                             this.total += prod.totalCart;
+                
                             return true;
                         }
                     }
                     return false;
                 });
 
-
                 filteredCart.map((prod) => {
                     total += prod.totalCart;
                 })
 
                 this.total = total;
-
+            
                 return filteredCart;
             } 
         },
         mounted() {
-            this.cart = Object.keys(sessionStorage);
+            this.cart = Object.keys(sessionStorage);            
+            this.userValue = Object.keys(localStorage)[0];
+            this.getFunc();
             this.getProducts();
         }
     }

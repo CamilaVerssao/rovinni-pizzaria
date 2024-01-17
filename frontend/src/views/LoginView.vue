@@ -40,7 +40,8 @@
     export default {
         data: () => ({
             username: null, 
-            senha: null
+            senha: null,
+            userValue: null
         }),
         methods: {
             async login() {
@@ -51,7 +52,9 @@
                     }
 
                     if(this.username && this.senha) {
-                        await Axios.post('/login', data);
+                        this.userValue = (await Axios.post('/login', data)).data;
+                        const userString = JSON.stringify(this.userValue);
+                        localStorage.setItem(this.userValue.id, userString);
                         this.$router.push('/');
                     }
                     else {
@@ -59,12 +62,7 @@
                     } 
                 }
                 catch(error) {
-                    if(error.response.data.error) {
-                        console.error('Erro no login:', error.response.data.messages);
-                    }
-                    else {
-                        console.error('Erro desconhecido:', error.message);
-                    }
+                    console.log(error);
                 }
             }
         }

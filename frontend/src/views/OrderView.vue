@@ -44,7 +44,7 @@
                         </div>
                         
                         <div id="buttons" class="pt-4">            
-                            <button class="btn btn-success" @click="this.$router.push('/order-payment')">Ir para pagamento  <font-awesome-icon :icon="['fas', 'chevron-right']" style="color: #ffffff;" /></button>
+                            <button class="btn btn-success" @click="this.filterCart.length !== 0 ? this.$router.push('/order-payment') : this.alertar('Adicone ao menos um item no carrinho.')">Ir para pagamento  <font-awesome-icon :icon="['fas', 'chevron-right']" style="color: #ffffff;" /></button>
                         </div>     
                     </div>
              </div>
@@ -94,6 +94,9 @@
             async getSizes() {
                 const data = (await Axios.get('/tamanho')).data;
                 this.tamanhos = data;
+            },
+            alertar(msg) {
+                window.alert(msg);
             }
         },
         computed: {
@@ -118,17 +121,13 @@
                     return false;
                 });
 
-                console.log(filteredCart)
-
                 return filteredCart;
-                
             } 
   },
   mounted() {
     this.getProducts();
     this.cart = Object.keys(sessionStorage);
     this.numItens = this.cart.length;
-
   },
 }
 </script>

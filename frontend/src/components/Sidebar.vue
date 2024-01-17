@@ -51,7 +51,7 @@
                             <font-awesome-icon :icon="['fas', 'user']" style="color: #000000;" />
                         </a>
                         <div class="dropdown-menu" aria-labelledby="triggerId">
-                            <a class="dropdown-item" href="#">Perfil</a>
+                            <a class="dropdown-item" id="username" href="#">{{ this.funcionario}}</a>
                             <a class="dropdown-item" href="#" @click="logout()">Sair</a>
                         </div>
                     </div>
@@ -68,13 +68,23 @@
 
     export default {
         data: () => ({
-            
+            userValue: null,
+            funcionario: null
         }),
         methods: {
             async logout() {
                 await Axios.post('/logout');
+                localStorage.clear();
+                sessionStorage.clear();
                 this.$router.push('/login');
+            },
+            async getFunc() {
+                this.funcionario = (await Axios.get(`/funcionario?id=${this.userValue}`)).data[0].username;
             }
+        },
+        mounted() {
+            this.userValue = Object.keys(localStorage)[0];
+            this.getFunc();
         }
     }
     
