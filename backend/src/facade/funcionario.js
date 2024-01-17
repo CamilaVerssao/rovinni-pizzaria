@@ -1,8 +1,13 @@
 const db = require('../dbo/base');
 const bcrypt = require('bcrypt');
 
-const get = async () => {
-    return await db.get('funcionario');
+const get = async (query) => {
+    const params = [{
+        field: 'id',
+        value: query.id
+    }];
+
+    return await db.get('funcionario', params);
 }
 const getById = async (id) => {
     if(!id) return;

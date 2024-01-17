@@ -18,6 +18,7 @@ const get = async(tableName, params, joins) => {
             }
         });
     }
+    console.log(baseQuery.toSQL().sql)
     return await baseQuery;
 }
 

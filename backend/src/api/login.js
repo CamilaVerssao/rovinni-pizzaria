@@ -7,11 +7,11 @@ const insert = async(req, res) => {
         if (!user) return res.sendStatus(404);
         if(await bcrypt.compare(req.body.senha, user.senha)) {
             res.cookie('cookie', user.id, {
-                httpOnly: true,
                 maxAge: 5000000
             }); 
-            return res.status(200).json({ user: user.id });
+            return res.status(200).json(user);
         }
+
         throw new Error('Senha inválida');
     }
     catch (error) {

@@ -1,8 +1,11 @@
 const db = require('../dbo/base');
 
-const get = async () => {
+const get = async (query) => {
 
-    const params = [{}];
+    const params = [{
+        field: 'funcionario_id',
+        value: query.cookie
+    }];
 
     const join = [
         {
@@ -13,7 +16,7 @@ const get = async () => {
         },
         {
             paramTo: 'pedido.cliente_id',
-            paramFrom: 'cliente.cliente_id',
+            paramFrom: 'cliente.id',
             type: 'leftJoin',
             tableName: 'cliente'
         }
