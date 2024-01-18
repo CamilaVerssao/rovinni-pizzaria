@@ -1,9 +1,9 @@
 <template>
     <div class="all-content">
-        <div id="card-content" v-for="produto in produtos" :key="produto.id" @click="this.$emit('produtoClicado', produto)" > <!--se o card for bebida, não aparece a lista de ingredientes para editar-->
+        <div id="card-content" v-for="produto in filterProduct" :key="produto.id" @click="this.$emit('produtoClicado', produto)" > <!--se o card for bebida, não aparece a lista de ingredientes para editar-->
             <div class="card-img" @click="goToInfo(produto.id)"></div>
             <div class="card-info" @click="goToInfo(produto.id)">
-                <h1>{{ produto.nome }} {{ produto.tamanho  }}</h1>
+                <h1>{{ produto.nome }} {{produto.tamanho }}</h1>
                 <h2>R$ {{ produto.preco }}</h2>
             </div>
             <div class="buttons">
@@ -13,7 +13,7 @@
                     </button>
                 </div>
                 <div id="editIcon">
-                    <EditButton :href="`/#/edit-product/${produto.id}`" />
+                    <EditButton :href="`/#/edit-product/${produto.produtoId}`" />
                 </div>
             </div>  
         </div>
@@ -30,7 +30,8 @@
     export default {
         name: 'ItemCard',
         data: () => ({
-            produtos: null
+            produtos: null,
+            tamanhos: null
         }),
         props: {
             detailHref: {
@@ -50,7 +51,7 @@
             async deleteProduct(id) {
 
                 if (window.confirm("Tem certeza que deseja excluir?") === true) {
-                    return await Axios.delete(`/produto/${id}`);
+                    await Axios.delete(`/produto/${id}`);
                 };
 
                 window.location.reload();

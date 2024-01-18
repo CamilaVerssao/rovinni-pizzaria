@@ -4,7 +4,7 @@
             <h1 id="itens-number"><font-awesome-icon :icon="['fas', 'cart-shopping']" style="color: #000000;" /> {{ numItens }} itens</h1>
             <div class="top-right">
                 <div class="item-row d-flex right-position" v-for="carrinho in filterCart" :key="carrinho.id"> <!--adicionar para cada entrada pelo botão lateral dos cards-->
-                    <p>{{ carrinho.nome }}  {{ getSizeName(carrinho.tamanho_id) }}</p>
+                    <p>{{ carrinho.nome }} {{ carrinho.tamanho }}</p>
                     <p style="font-weight: bold;">R$ {{ carrinho.preco.toFixed(2) }}</p>
                     <p style="font-weight: bold;">R$ {{ carrinho.totalCart.toFixed(2) }}</p>
                     <button @click="deleteItem(carrinho.id)" id="x-btn"><font-awesome-icon :icon="['fas', 'xmark']" style="color: #000000;"/></button>
@@ -44,22 +44,10 @@
         const data = (await Axios.get('/produto')).data;
         this.produtos = data;
       },
-      async getSizes() {
-        const data = (await Axios.get('/tamanho')).data;
-        this.tamanhos = data;
-      },
-      getSizeName(id) {
-        
-        if (!this.tamanhos || this.tamanhos.length === 0) {
-            return "Tamanho não encontrado";
-        }
-        const size = this.tamanhos.find(size => size.id === id);
-        return size ? size.nome : "";
-        },
-        deleteItem(id) {
-          sessionStorage.removeItem(id);
-          window.location.reload();
-        }
+      deleteItem(id) {
+        sessionStorage.removeItem(id);
+        window.location.reload();
+      }
     },
     computed: {
       filterCart() {
@@ -69,8 +57,8 @@
 
         const filteredCart = this.produtos.filter((prod) => {
           for (let i = 0; i < this.cart.length; i++) {
-            if (prod.id == this.cart[i]) {
-              let obj = JSON.parse(sessionStorage.getItem(prod.id));
+            if (prod.produtoId == this.cart[i]) {
+              let obj = JSON.parse(sessionStorage.getItem(prod.produtoId));
               prod.totalCart = obj.totalCart;
               this.total += prod.totalCart;
               return true;
@@ -78,14 +66,12 @@
           }
           return false;
         });
-        
         return filteredCart;
       }
     
     },
     mounted() {
       this.getProducts();
-      this.getSizes();
       this.cart = Object.keys(sessionStorage);
       this.numItens = this.cart.length;
     },

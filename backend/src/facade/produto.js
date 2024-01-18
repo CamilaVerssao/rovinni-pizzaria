@@ -1,11 +1,18 @@
 const db = require('../dbo/base');
 
 const get = async (query) => {
+
+    const fields = [
+        'produto.id as produtoId',
+        'produto.*',
+        'tamanho.*'
+    ]
+
     const params = [{
         field: 'tipo_id',
         value: query.tipo
     }];
-
+    
     const join = [{
         paramTo: 'produto.tamanho_id',
         paramFrom: 'tamanho.id',
@@ -13,7 +20,7 @@ const get = async (query) => {
         tableName: 'tamanho'
     }];
 
-    return await db.get('produto', params, join);
+    return await db.get('produto', params, join, fields);
 }
 const getById = async (id) => {
     if(!id) return;

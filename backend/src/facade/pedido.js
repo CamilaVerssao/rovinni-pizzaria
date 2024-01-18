@@ -2,6 +2,14 @@ const db = require('../dbo/base');
 
 const get = async (query) => {
 
+    const fields = [
+        'pedido.id as pedidoId',
+        'pedido.createdAt as pedidoCreatedAt', 
+        'pedido.*',
+        'funcionario.*',
+        'cliente.*'
+    ]
+
     const params = [{
         field: 'funcionario_id',
         value: query.cookie
@@ -20,9 +28,10 @@ const get = async (query) => {
             type: 'leftJoin',
             tableName: 'cliente'
         }
+
 ]
 
-    return await db.get('pedido', params, join);
+    return await db.get('pedido', params, join, fields);
 }
 const getById = async (id) => {
     if(!id) return;

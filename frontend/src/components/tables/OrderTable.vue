@@ -14,16 +14,16 @@
             </thead>
             <tbody>
                 <tr v-for="pedido in pedidos" :key="pedido.id">
-                    <td> {{ pedido.id }} 
-                        <button id="details-btn" @click="this.$router.push(`/order-details/${pedido.id}`)">
+                    <td> {{ pedido.pedidoId }} 
+                        <button id="details-btn" @click="this.$router.push(`/order-details/${pedido.pedidoId}`)">
                             <font-awesome-icon :icon="['fas', 'magnifying-glass-plus']" style="color: #000000;" />
                         </button>
                     </td>     
-                    <td>{{ formatData(pedido.createdAt) }}</td>
+                    <td>{{ formatData(pedido.pedidoCreatedAt) }}</td>
                     <td>{{ pedido.nome }}</td>
                     <td>{{ pedido.username ? pedido.username : 'Não' }}</td>
                     <td>R${{ pedido.total }}</td>
-                    <td>{{ pedido.pagamento }}</td>
+                    <td>{{ pedido.pagamento !== null ? pedido.pagamento : 'Não' }}</td>
                     <td>{{ pedido.status }}</td>
                 </tr>
             </tbody>
@@ -34,14 +34,13 @@
 <script>
 
     import { Axios } from '@/configAxios';
-    import  moment from 'moment';
+    import  moment from 'moment-timezone';
 
     export default {
         data: () => ({
             pedidos: null,
             clientes: null,
             funcionarios: null,
-            
         }),
         methods: {
             goToDetails() {
@@ -78,8 +77,9 @@
                 return funcionario ? funcionario.username : "";
             },
             formatData(data) {
-                return moment(data).format('DD/MM/YYYY');
+                return moment(data).tz('America/Sao_Paulo').format('DD/MM/YYYY HH:mm:ss');
             }
+
         },
         mounted() {
             this.getOrders();

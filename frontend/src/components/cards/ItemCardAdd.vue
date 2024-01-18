@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div id="card-content" v-for="produto in produtos" :key="produto.id" @click="addItemToCart(produto)">
+        <div id="card-content" v-for="produto in filterProduct" :key="produto.produtoId" @click="addItemToCart(produto)">
             <div class="card-img"></div>
             <div class="card-info">
                 <h1>{{ produto.nome }} {{ produto.tamanho }}</h1>
@@ -19,7 +19,6 @@
            cart: null,
            qtd: 0,
            tamanhos: null,
-           produtos: null
         }),
         props: {
             produtos: {
@@ -33,22 +32,18 @@
             }
         },
         methods: {
-            async getProducts() {
-                const data = await Axios.get('/produto');
-                this.produtos = data;
-            },
             addItemToCart(produto) {
 
-                if (!sessionStorage.getItem(produto.id)) {
+                if (!sessionStorage.getItem(produto.produtoId)) {
                     produto.quantity = 1;
                 } else {
-                    const storedProduto = JSON.parse(sessionStorage.getItem(produto.id));
+                    const storedProduto = JSON.parse(sessionStorage.getItem(produto.produtoId));
                     produto.quantity = storedProduto.quantity + 1;
                 }
 
                 produto.totalCart = produto.preco * produto.quantity;
                 const produtoString = JSON.stringify(produto);
-                sessionStorage.setItem(produto.id, produtoString);
+                sessionStorage.setItem(produto.produtoId, produtoString);
 
                 window.location.reload();
             }
@@ -71,7 +66,6 @@
         },
         mounted() { 
             this.qtd = 0;
-            this.getProducts();
         }  
     }
 </script>

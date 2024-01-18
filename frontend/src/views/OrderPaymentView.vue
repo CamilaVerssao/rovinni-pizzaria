@@ -83,6 +83,7 @@
             async confirmPayment() {
 
                 this.status = 'Concluído';
+                const cart = this.filterCart;
                 
                 const data = {
                     pagamento: this.payment,
@@ -92,25 +93,31 @@
                     cliente_id: 1
                 }
 
-                const pedido = (await Axios.post('/pedido', data)).data;
-                const pedidoId = pedido.id;
+                if(this.payment) {
+                    const pedido = (await Axios.post('/pedido', data)).data;
+                    const pedidoId = pedido.id;
 
-                for(let i = 0; i < this.cart.length; i++) {
-                    const productId = this.cart[i];
-                    const productData = JSON.parse(sessionStorage.getItem(productId));
+                    for(let i = 0; i < this.cart.length; i++) {
+                        const productId = this.cart[i];
+                        const productData = JSON.parse(sessionStorage.getItem(productId));
 
-                    const cartItem = {
-                        pedido_id: pedidoId,
-                        prod_id: productId,
-                        quantidade: productData.quantity
+                        const cartItem = {
+                            pedido_id: pedidoId,
+                            prod_id: productId,
+                            quantidade: productData.quantity
+                        }
+
+                        await Axios.post('/pedido_item', cartItem);
                     }
 
-                    await Axios.post('/pedido_item', cartItem);
+                    sessionStorage.clear();
+
+                    this.$router.push("/order-list");
                 }
-
-                sessionStorage.clear();
-
-                this.$router.push("/order-list");
+                else {
+                    alert('Escolha uma forma de pagamento.')
+                }
+                
             },
             async cancelarPedido() {
                 this.status = 'Cancelado';
@@ -118,10 +125,9 @@
                 const data = {
                     pagamento: this.payment,
                     status: this.status,
-                    total: this.total,
+                    total: 0,
                     funcionario_id: this.funcionario.id,
-                    cliente_id: 1,
-                    deleted_at: new Date()
+                    cliente_id: 1
                 }
 
                 await Axios.post('/pedido', data);

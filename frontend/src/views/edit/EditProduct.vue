@@ -86,7 +86,7 @@
 
                             <select class="form-select" aria-placeholder="Digite a categoria" id="tamanho-input" v-model="selectedTamanho" v-if="this.selectedTipo != 'Bebida'" required>
                                 <option value="" disabled selected hidden>Selecione</option>
-                                <option :value="tamanho.nome" v-for="tamanho in tamanhos" :key="tamanho.id">{{ tamanho.nome }}</option>
+                                <option :value="produto.nome" v-for="(produto, index) in produtos" :key="index">{{ produto.tamanho }}</option>
                             </select>
 
                             <select class="form-select" aria-placeholder="Digite a categoria" id="tamanho-input" v-else required>
@@ -283,7 +283,7 @@
                 this.ingredients = data;
             },
             async getProducts() {
-                const data = (await Axios.get('/produto')).data;
+                const data = (await Axios.get('/tamanho')).data;
                 this.produtos = data;
             },
             async getTipos() {
@@ -294,10 +294,10 @@
                 const data = (await Axios.get('/categoria')).data;
                 this.categorias = data;
             },
-            async getTamanhos() {
+            /*async getTamanhos() {
                 const data = (await Axios.get('/tamanho')).data;
                 this.tamanhos = data;
-            },
+            },*/
             checkAction() {
                 if(this.areAllFieldsFilled()) {
                     if (this.$route.params.id) {
@@ -355,7 +355,7 @@
             this.getCategorias();
             this.getProducts();
             this.getTipos();
-            this.getTamanhos();
+            //this.getTamanhos();
             this.paramId = this.$route.params.id;
 
             if(this.paramId) {

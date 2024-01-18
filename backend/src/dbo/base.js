@@ -1,6 +1,6 @@
 const db = require('../config/db');
 
-const get = async(tableName, params, joins) => {
+const get = async(tableName, params, joins, fields) => {
     let baseQuery = db(tableName).where(`${tableName}.deleted_at`, null);
 
     if(params) {
@@ -18,7 +18,8 @@ const get = async(tableName, params, joins) => {
             }
         });
     }
-    console.log(baseQuery.toSQL().sql)
+    baseQuery.select(fields);
+    //console.log(baseQuery.toSQL().sql)
     return await baseQuery;
 }
 
