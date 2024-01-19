@@ -4,8 +4,13 @@ const get = async (query) => {
 
     const fields = [
         'produto.id as produtoId',
+        'produto.nome as produtoNome',
+        'categoria.nome as categoriaNome',
+        'tipo.nome as tipoNome',
         'produto.*',
-        'tamanho.*'
+        'tamanho.*',
+        'categoria.*',
+        'tipo.*'
     ]
 
     const params = [{
@@ -13,12 +18,26 @@ const get = async (query) => {
         value: query.tipo
     }];
     
-    const join = [{
-        paramTo: 'produto.tamanho_id',
-        paramFrom: 'tamanho.id',
-        type: 'leftJoin',
-        tableName: 'tamanho'
-    }];
+    const join = [
+        {
+            paramTo: 'produto.tamanho_id',
+            paramFrom: 'tamanho.id',
+            type: 'leftJoin',
+            tableName: 'tamanho'
+        },
+        {
+            paramTo: 'produto.categoria_id',
+            paramFrom: 'categoria.id',
+            type: 'leftJoin',
+            tableName: 'categoria'
+        },
+        {
+            paramTo: 'produto.tipo_id',
+            paramFrom: 'tipo.id',
+            type: 'leftJoin',
+            tableName: 'tipo'
+        }
+];
 
     return await db.get('produto', params, join, fields);
 }

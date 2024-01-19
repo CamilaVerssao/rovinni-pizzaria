@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <div id="buttons" class="pt-4">
-                    <button class="btn btn-danger" @click="this.$router.push('/ingredients-list')">Voltar</button>
+                    <button class="btn btn-danger" @click="this.$router.push('/stock-list')">Voltar</button>
                     <button class="btn btn-success" @click="createStock()">Salvar</button>
                 </div>
             </div>
@@ -24,6 +24,8 @@
 </template>
 
 <script>
+
+    import { Axios } from '@/configAxios';
 
     import Sidebar from '@/components/Sidebar.vue';
     import Title from '@/components/Title.vue';
@@ -46,17 +48,19 @@
             async createStock() {
 
                 const data = {
-                    nome: this.stock,
-                    estoqueMinimo: this.estoqueMinimo,
-                    estoqueAtual: this.estoqueAtual
+                    estoque_minimo: this.estoqueMinimo,
+                    estoque_atual: this.estoqueAtual
                 }
 
-                await Axios.put(`/ingrediente/${this.paramId}`, data);
-                await Axios.put(`/produto/${this.paramId}`, data);
-
+                if(this.$route.params.categoria == 6) {
+                    await Axios.put(`/ingrediente/${this.paramId}`, data);
+                }
+                else {
+                    await Axios.put(`/produto/${this.paramId}`, data);
+                }
 
                 this.$router.push("/stock-list");
-                }
+            }
         },
         mounted() {
             this.paramId = this.$route.params.id;
@@ -64,8 +68,6 @@
             if(this.paramId) {
                 this.editing = true;
             }
-
-            console.log()
 
         }
     }

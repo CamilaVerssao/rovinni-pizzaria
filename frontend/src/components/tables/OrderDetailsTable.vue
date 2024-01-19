@@ -12,20 +12,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>   
-                            <td>Produto 1</td>
-                            <td>R$0.00</td>
-                            <td>1</td>   
-                        </tr>
-                        <tr>   
-                            <td>Produto 1</td>
-                            <td>R$0.00</td>
-                            <td>1</td>   
-                        </tr>
-                        <tr>   
-                            <td>Produto 1</td>
-                            <td>R$0.00</td>
-                            <td>1</td>   
+                        <tr v-for="item in items" :key="item.id">   
+                            <td>{{ item.nome }}</td>
+                            <td>R${{ item.preco }}</td>
+                            <td>{{ item.quantidade }}</td>   
                         </tr>
                     </tbody>
                 </table>
@@ -74,20 +64,26 @@
     export default {
         data: () => ({
             paramId: null,
-            orders: {}
+            orders: {},
+            items: null
         }),
         methods: {
             async getOrderById(id) {
                 const data = (await Axios.get(`/pedido/${id}`)).data;
                 this.orders = data;
             },
+            async getPedidoItems(id) {
+                const data = (await Axios.get(`/pedido_item?pedido=${id}`)).data;
+                this.items = data;
+            },
             formatData(data) {
                 return moment(data).format('DD/MM/YYYY');
             }
         },
-        mounted() {
+        async mounted() {
             this.paramId = this.$route.params.id;
-            this.getOrderById(this.paramId);
+            await this.getOrderById(this.paramId);
+            await this.getPedidoItems(this.paramId);
         }
     }
 </script>

@@ -1,7 +1,36 @@
 const db = require('../dbo/base');
 
-const get = async () => {
-    return await db.get('pedido_item');
+const get = async (query) => {
+
+    const fields = [
+        'produto.id as produtoId',
+        'pedido.id as pedidoId',
+        'produto.*',
+        'pedido.*',
+        'pedido_item.*'
+    ]
+
+    const params = [{
+        field: 'pedido_id',
+        value: query.pedido
+    }];
+    
+    const join = [
+        {
+            paramTo: 'pedido_item.prodId',
+            paramFrom: 'produto.id',
+            type: 'leftJoin',
+            tableName: 'produto'
+        },
+        {
+            paramTo: 'pedido_item.pedidoId',
+            paramFrom: 'pedido.id',
+            type: 'leftJoin',
+            tableName: 'pedido'
+        }
+    ];
+
+    return await db.get('pedido_item', params, join, fields);
 }
 const getById = async (id) => {
     if(!id) return;

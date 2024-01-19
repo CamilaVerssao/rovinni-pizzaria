@@ -1,7 +1,15 @@
 const db = require('../dbo/base');
 
-const get = async () => {
-    return await db.get('categoria');
+const get = async (query) => {
+
+    const params = [
+        {
+            field: 'ativo',
+            value: query.ativo
+        }
+    ];
+
+    return await db.get('categoria', params);
 }
 const getById = async (id) => {
     if(!id) return;

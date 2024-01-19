@@ -3,7 +3,7 @@
         <div id="card-content" v-for="produto in filterProduct" :key="produto.produtoId" @click="addItemToCart(produto)">
             <div class="card-img"></div>
             <div class="card-info">
-                <h1>{{ produto.nome }} {{ produto.tamanho }}</h1>
+                <h1>{{ produto.produtoNome }} {{ produto.tamanho }}</h1>
                 <h2>R$ {{ produto.preco }}</h2>
             </div>
         </div>

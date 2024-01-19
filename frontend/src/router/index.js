@@ -69,7 +69,7 @@ const routes = [
     component: EditStock
   },
   {
-    path: '/edit-stock/:id',
+    path: '/edit-stock/:id/:categoria',
     name: 'edit-stock',
     component: EditStock
   },
@@ -130,4 +130,4 @@ const router = createRouter({
   routes
 })
 
-export default router
+export default router;

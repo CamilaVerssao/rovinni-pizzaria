@@ -64,7 +64,8 @@
             status: null,
             pedidos: null,
             cookieValue: null,
-            funcionario: null
+            funcionario: null,
+            teste: null
         }),
         components: {
             Sidebar,
@@ -150,8 +151,8 @@
 
                 const filteredCart = this.produto.filter((prod) => {
                     for (let i = 0; i < this.cart.length; i++) {
-                        if (prod.id == this.cart[i]) {
-                            let obj = JSON.parse(sessionStorage.getItem(prod.id));
+                        if (prod.produtoId == this.cart[i]) {
+                            let obj = JSON.parse(sessionStorage.getItem(prod.produtoId));
                             prod.totalCart = obj.totalCart;
                             this.total += prod.totalCart;
                 
@@ -166,6 +167,7 @@
                 })
 
                 this.total = total;
+                console.log(filteredCart)
             
                 return filteredCart;
             } 

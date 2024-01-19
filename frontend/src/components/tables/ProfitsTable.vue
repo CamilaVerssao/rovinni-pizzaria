@@ -10,9 +10,9 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="lucro in filterProfits" :key="lucro.id">
-                    <td>{{ lucro.nome }} {{ getSizeName(lucro.tamanhoId) }}</td>     
-                    <td>R$ {{ lucro.ingredientes ? getCusto(lucro.ingredientes) : lucro.custo.toFixed(2) }}</td>
+                <tr v-for="lucro in filterProfits" :key="lucro.produtoId">
+                    <td>{{ lucro.produtoNome }} {{ lucro.tamanho }}</td>     
+                    <td>R$ {{ lucro.custo == null ? getCusto(lucro.ingredientes) : lucro.custo }}</td>
                     <td>{{ lucro.volumeVendas }}</td>
                     <td>R$ {{ ((lucro.preco * lucro.volumeVendas) - ( lucro.ingredientes ? getCusto(lucro.ingredientes) : lucro.custo)).toFixed(2)  }}</td>
                 </tr>
@@ -22,12 +22,15 @@
 </template>
 
 <script>
-import { Axios } from 'axios';
+
+    import { Axios } from '@/configAxios';
+
     export default {
         data: () => ({
             lucros: null,
             tamanhos: null,
-            ingredientes: null
+            ingredientes: null,
+            pizzaIngred: null
         }),
         props: {
             palavra: ""
@@ -37,21 +40,14 @@ import { Axios } from 'axios';
                 const data = (await Axios.get('/produto')).data;
                 this.lucros = data;
             },
-            async getSizes() {
-                const data = (await Axios.get('/tamanho')).data;
-                this.tamanhos = data;
-            },
             async getIngredients() {
                 const data = (await Axios.get('/ingrediente')).data;
                 this.ingredientes = data;
             },
-            getSizeName(id) {
-                if (!this.tamanhos || this.tamanhos.length === 0) {
-                    return "Tamanho não encontrado";
-                }
-
-                const size = this.tamanhos.find(size => size.id === id);
-                return size ? size.nome : "";
+            async getPizzaIngrediente() {
+                const data = (await Axios.get('/pizza_ingrediente')).data;
+                this.pizzaIngred = data;
+                console.log(this.pizzaIngred)
             },
             getCusto(arrIngred) {
                 if (!arrIngred || arrIngred.length === 0) {
@@ -91,8 +87,8 @@ import { Axios } from 'axios';
         },
         mounted() {
             this.getProfits();
-            this.getSizes();
             this.getIngredients();
+            this.getPizzaIngrediente();
         }
     }
 </script>

@@ -1,14 +1,14 @@
 <template>
     <div class="all-content">
-        <div id="card-content" v-for="produto in filterProduct" :key="produto.id" @click="this.$emit('produtoClicado', produto)" > <!--se o card for bebida, não aparece a lista de ingredientes para editar-->
-            <div class="card-img" @click="goToInfo(produto.id)"></div>
-            <div class="card-info" @click="goToInfo(produto.id)">
-                <h1>{{ produto.nome }} {{produto.tamanho }}</h1>
+        <div id="card-content" v-for="produto in filterProduct" :key="produto.produtoId" @click="this.$emit('produtoClicado', produto)" > <!--se o card for bebida, não aparece a lista de ingredientes para editar-->
+            <div class="card-img" @click="goToInfo(produto.produtoId)"></div>
+            <div class="card-info" @click="goToInfo(produto.produtoId)">
+                <h1>{{ produto.produtoNome }} {{ produto.tamanho }}</h1>
                 <h2>R$ {{ produto.preco }}</h2>
             </div>
             <div class="buttons">
                 <div id="trashIcon">
-                    <button @click="deleteProduct(produto.id)">
+                    <button @click="deleteProduct(produto.produtoId)">
                         <font-awesome-icon :icon="['fas', 'trash']" style="color: #000000;" />
                     </button>
                 </div>
@@ -78,7 +78,7 @@
                 const lowerCasePalavra = this.palavra.toLowerCase();
 
                 return this.produtos.filter(cat =>
-                    cat.nome.toLowerCase().includes(lowerCasePalavra)
+                    cat.produtoNome.toLowerCase().includes(lowerCasePalavra)
                 );
             },
         },

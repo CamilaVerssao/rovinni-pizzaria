@@ -27,9 +27,6 @@
                         </ul>
                     </div>
                 </div>
-                <!--<div id="content-right">
-                    <EditProdFieldsVue />
-                </div>-->
 
                 <div id="content-right" class="d-grid gap-4">
                     <div class="row d-flex">
@@ -37,7 +34,7 @@
                             <h1 class="field-title">
                                 Nome do Produto
                             </h1>
-                            <input type="text" v-model="nome" :placeholder="this.editing ? filterProduct(this.paramId)?.nome ?? '' : 'Selecione'" class="form-control" required>
+                            <input type="text" v-model="nome" :placeholder="this.editing ? filterProduct(this.paramId)?.produtoNome ?? '' : 'Selecione'" class="form-control" required>
                         </div>
                         <div class="product-field">
                             <h1 class="field-title">
@@ -61,8 +58,8 @@
                             </h1>
 
                             <select class="form-select" aria-placeholder="Digite o tipo" id="tipo-input" v-model="selectedCategoria" required>
-                                <option value="" disabled selected hidden>Selecione</option>
-                                <option :value="categoria.nome" v-for="categoria in filterActiveCategories" :key="categoria.id" >{{ categoria.nome }} </option>
+                                <option value="" disabled selected hidden>{{ this.editing ? filterProduct(this.paramId)?.categoriaNome ?? '' : 'Selecione' }}</option>
+                                <option :value="categoria.nome" v-for="categoria in categorias" :key="categoria.id" >{{ categoria.nome }} </option>
                             </select>
                         </div> 
                     </div>
@@ -74,7 +71,7 @@
                             </h1>
 
                             <select class="form-select" aria-placeholder="Digite a categoria" id="category-input" v-model="selectedTipo" required>
-                                <option value="" disabled selected hidden>Selecione</option>
+                                <option value="" disabled selected hidden>{{ this.editing ? filterProduct(this.paramId)?.tipoNome ?? '' : 'Selecione' }}</option>
                                 <option :value="tipo.nome" v-for="tipo in tipos" :key="tipo.id">{{ tipo.nome }}</option>
                             </select>
                         </div> 
@@ -85,13 +82,13 @@
                             </h1>
 
                             <select class="form-select" aria-placeholder="Digite a categoria" id="tamanho-input" v-model="selectedTamanho" v-if="this.selectedTipo != 'Bebida'" required>
-                                <option value="" disabled selected hidden>Selecione</option>
-                                <option :value="produto.nome" v-for="(produto, index) in produtos" :key="index">{{ produto.tamanho }}</option>
+                                <option value="" disabled selected hidden>{{ this.editing ? filterProduct(this.paramId)?.tamanho ?? '' : 'Selecione' }}</option>
+                                <option :value="tamanho.tamanho" v-for="tamanho in tamanhos" :key="tamanho.id">{{ tamanho.tamanho }}</option>
                             </select>
 
                             <select class="form-select" aria-placeholder="Digite a categoria" id="tamanho-input" v-else required>
-                                <option value="" disabled selected hidden>Selecione</option>
-                                <option disabled :value="tamanho.nome" v-for="tamanho in tamanhos" :key="tamanho.id">{{ tamanho.nome }}</option>
+                                <option value="" disabled selected hidden>{{ this.editing ? filterProduct(this.paramId)?.tamanho ?? '' : 'Selecione' }}</option>
+                                <option disabled :value="tamanho.tamanho" v-for="tamanho in tamanhos" :key="tamanho.id">{{ tamanho.tamanho }}</option>
                             </select>
                         </div> 
                     </div>
@@ -109,7 +106,7 @@
                                 Custo
                             </h1>
                             <input type="text" placeholder="Digite o custo" class="form-control" v-model="custo" v-if="this.selectedTipo === 'Bebida'" required>
-                            <input disabled type="text" placeholder="Digite o custo" class="form-control" v-else required> 
+                            <input disabled type="number" :placeholder="this.editing ? filterProduct(this.paramId)?.custo ?? '' : 'Selecione'" class="form-control" v-else required> 
                         </div>
                     </div>
 
@@ -176,7 +173,7 @@
 
                 const selectedCategory = this.categorias.find((categoria) => categoria.nome === this.selectedCategoria);
                 const selectedTipo = this.tipos.find((tipo) => tipo.nome === this.selectedTipo);
-                const selectedTamanho = this.tamanhos.find((tam) => tam.nome === this.selectedTamanho);
+                const selectedTamanho = this.tamanhos.find((tam) => tam.tamanho === this.selectedTamanho);
 
                 if (selectedCategory) {
                     this.selectedCategoryId = selectedCategory.id;
@@ -203,7 +200,7 @@
                 }
 
                 const createdProduct = (await Axios.post('/produto', data)).data;
-                const productId = createdProduct.id;
+                const productId = createdProduct.produtoId;
 
                 let associationPromises = '';
 
@@ -224,7 +221,7 @@
 
                 const selectedCategory = this.categorias.find((categoria) => categoria.nome === this.selectedCategoria);
                 const selectedTipo = this.tipos.find((tipo) => tipo.nome === this.selectedTipo);
-                const selectedTamanho = this.tamanhos.find((tam) => tam.nome === this.selectedTamanho);
+                const selectedTamanho = this.tamanhos.find((tam) => tam.tamanho === this.selectedTamanho);
 
                 if (selectedCategory) {
                     this.selectedCategoryId = selectedCategory.id;
@@ -252,7 +249,7 @@
                 
 
                 const createdProduct = (await Axios.put(`/produto/${id}`, data)).data;
-                const productId = createdProduct.id;
+                const productId = createdProduct.produtoId;
 
                 let associationPromises = '';
 
@@ -273,7 +270,7 @@
             },
             addItem() {
                 const selectedIngredient = this.ingredients.find(item => item.nome === this.selected);
-                const isAlreadyAdded = this.selectedIngredients.some(item => item.nome=== selectedIngredient.nome);
+                const isAlreadyAdded = this.selectedIngredients.some(item => item.nome === selectedIngredient.nome);
                     if (selectedIngredient && !isAlreadyAdded) {
                         this.selectedIngredients.push(selectedIngredient);
                     }
@@ -283,7 +280,7 @@
                 this.ingredients = data;
             },
             async getProducts() {
-                const data = (await Axios.get('/tamanho')).data;
+                const data = (await Axios.get('/produto')).data;
                 this.produtos = data;
             },
             async getTipos() {
@@ -291,13 +288,13 @@
                 this.tipos = data;
             },
             async getCategorias() {
-                const data = (await Axios.get('/categoria')).data;
+                const data = (await Axios.get('/categoria?ativo=1')).data;
                 this.categorias = data;
             },
-            /*async getTamanhos() {
+            async getTamanhos() {
                 const data = (await Axios.get('/tamanho')).data;
                 this.tamanhos = data;
-            },*/
+            },
             checkAction() {
                 if(this.areAllFieldsFilled()) {
                     if (this.$route.params.id) {
@@ -331,31 +328,24 @@
                 if (!this.produtos) return null;
 
                 const filteredProd = this.produtos.filter((prod) => {
-                    if(prod.id == id) {
+                    if(prod.produtoId == id) {
                         return true;
                     }
                     return false;
                 });
+
+                console.log( filteredProd[0])
                 
                 return filteredProd[0];
 
             },
-        },
-        computed: {
-            filterActiveCategories() {
-                if(!this.categorias) return [];
-
-                return this.categorias
-                    .filter((cat) => cat.ativo === 1);
-                    
-            }
         },
         mounted() {
             this.getIngredients();
             this.getCategorias();
             this.getProducts();
             this.getTipos();
-            //this.getTamanhos();
+            this.getTamanhos();
             this.paramId = this.$route.params.id;
 
             if(this.paramId) {

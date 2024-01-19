@@ -11,12 +11,13 @@
             </thead>
             <tbody>
                 <tr v-for="estoque in filterStock" :key="estoque.id">    
-                    <td>{{ estoque.nome }} {{ estoque.tamanho }}</td>
+                    <td>{{ estoque.categoriaId == 6 ? estoque.nome : estoque.produtoNome }} {{ estoque.tamanho }}</td>
                     <td>{{ estoque.estoqueMinimo }}</td>
-                    <td>{{ estoque.estoqueAtual }}</td>
+                    <td v-if="estoque.estoqueAtual < estoque.estoqueMinimo" :style="{ color : '#FF0000' }">{{ estoque.estoqueAtual }}</td>
+                    <td style="color: rgb(0, 163, 0)" v-else>{{ estoque.estoqueAtual }}</td>
                     <td>
                         <div class="buttons">
-                            <EditButton :href="`/#/edit-stock/${estoque.id}`" />
+                            <EditButton :href="`/#/edit-stock/${estoque.categoriaId == 6 ? estoque.id : estoque.produtoId}/${estoque.categoriaId}`" />
                         </div>
                     </td>   
                 </tr>
@@ -33,9 +34,9 @@
 
     export default {
         data: () => ({
-            ingredientes: null,
-            produtos: null,
-            stock: {}
+            ingredientes: [],
+            produtos: [],
+            stock: []
         }),
         components: {
             EditButton
@@ -71,9 +72,9 @@
                 );
             }
         },
-        mounted() {
-            this.getIngredientes();
-            this.getProdutos();
+        async mounted() {
+            await this.getIngredientes();
+            await this.getProdutos();
         }
     }
 </script>

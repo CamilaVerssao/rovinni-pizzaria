@@ -24,7 +24,7 @@
                             <h1 id="itens-number"><font-awesome-icon :icon="['fas', 'cart-shopping']" style="color: #000000;" /> {{ numItens }} itens</h1>
                             <div class="top-right">
                                 <div class="item-row d-flex right-position" v-for="carrinho in filterCart" :key="carrinho.produtoId">
-                                    <p>{{ carrinho.nome }} {{ carrinho.tamanho }}</p>
+                                    <p>{{ carrinho.produtoNome }} {{ carrinho.tamanho }}</p>
                                     <p style="font-weight: bold;">R$ {{ carrinho.preco.toFixed(2) }}</p>
                                     <p style="font-weight: bold;">R$ {{ carrinho.totalCart.toFixed(2) }}</p>
                                     <button @click="deleteItem(carrinho.produtoId)" id="x-btn"><font-awesome-icon :icon="['fas', 'xmark']" style="color: #000000;"/></button>
