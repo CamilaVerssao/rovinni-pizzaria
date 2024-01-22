@@ -31,7 +31,7 @@
                     </h1>
 
                     <select disabled name="" class="form-select" aria-placeholder="Digite a categoria" id="category-input disabled">
-                        <option disabled selected hidden>Selecione</option> 
+                        <option value="" disabled selected hidden>{{ this.produtoGetById.categoriaNome }}</option>
                         <option v-for="categoria in categorias" :key="categoria.id" :value="categorias.nome">{{ categoria.nome }}</option>
                     </select>
                 </div>

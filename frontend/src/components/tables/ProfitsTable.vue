@@ -12,9 +12,9 @@
             <tbody>
                 <tr v-for="lucro in filterProfits" :key="lucro.produtoId">
                     <td>{{ lucro.produtoNome }} {{ lucro.tamanho }}</td>     
-                    <td>R$ {{ lucro.custo == null ? getCusto(lucro.ingredientes) : lucro.custo }}</td>
+                    <td>R$ {{ lucro.custo == null ?  getCusto(lucro.produtoId) : lucro.custo }}</td>
                     <td>{{ lucro.volumeVendas }}</td>
-                    <td>R$ {{ ((lucro.preco * lucro.volumeVendas) - ( lucro.ingredientes ? getCusto(lucro.ingredientes) : lucro.custo)).toFixed(2)  }}</td>
+                    <td>R$ {{ lucro.custo == null ? (lucro.preco * lucro.volumeVendas) - (getCusto(lucro.produtoId) * lucro.produtoEstoqueAtual) : (lucro.preco * lucro.volumeVendas) - (lucro.custo * lucro.produtoEstoqueAtual) }}</td>
                 </tr>
             </tbody>
         </table>
@@ -27,7 +27,6 @@
 
     export default {
         data: () => ({
-            lucros: null,
             tamanhos: null,
             ingredientes: null,
             pizzaIngred: null
@@ -36,10 +35,6 @@
             palavra: ""
         },
         methods: {
-            async getProfits() {
-                const data = (await Axios.get('/produto')).data;
-                this.lucros = data;
-            },
             async getIngredients() {
                 const data = (await Axios.get('/ingrediente')).data;
                 this.ingredientes = data;
@@ -49,46 +44,64 @@
                 this.pizzaIngred = data;
                 console.log(this.pizzaIngred)
             },
-            getCusto(arrIngred) {
-                if (!arrIngred || arrIngred.length === 0) {
+            async getCusto(produtoId) {
+                if (!this.pizzaIngred) {
+                    return "Array de pizzaIngred não encontrado";
+                }
+
+                const ingredientsForProduct = this.pizzaIngred.filter(item => item.produtoId === produtoId);
+
+                if (!ingredientsForProduct || ingredientsForProduct.length === 0) {
                     return "Array de ingredientes não encontrado";
                 }
 
                 let custoTotal = 0.0;
 
-                if (this.ingredientes && this.ingredientes.length > 0) {
-                    arrIngred.forEach(item => {
-                        const ingrediente = this.ingredientes.find(ingred => ingred.id === item.id);
-
-                        if (ingrediente) {
-                            custoTotal += ingrediente.precoRelativo * item.quantidade;
+                if (this.pizzaIngred.length > 0) {
+                    ingredientsForProduct.forEach(item => {
+                        if(item.tamanhoId === 1) {
+                            custoTotal = item.precoRelativo * 2;
+                        }
+                        else if(item.tamanhoId === 2){
+                            custoTotal = item.precoRelativo * 3;
+                        }
+                        else if(item.tamanhoId === 3){
+                            custoTotal = item.precoRelativo * 4;
+                        }
+                        else {
+                            custoTotal = item.precoRelativo * 5;
                         }
                     });
-                } else {
-                    custoTotal = arrIngred.length * 2.5; 
                 }
-
-                return custoTotal.toFixed(2);
+                return custoTotal;
             },
         },
         computed: {
             filterProfits() {
 
                 if (!this.palavra) {
-                    return this.lucros;
+                    return this.pizzaIngred;
                 }
 
                 const lowerCasePalavra = this.palavra.toLowerCase();
 
-                return this.lucros.filter(luc =>
-                    luc.nome.toLowerCase().includes(lowerCasePalavra)
+                return this.pizzaIngred.filter(luc =>
+                    luc.produtoNome.toLowerCase().includes(lowerCasePalavra)
                 );
             },
         },
-        mounted() {
-            this.getProfits();
-            this.getIngredients();
-            this.getPizzaIngrediente();
+        async mounted() {
+            await this.getIngredients();
+            await this.getPizzaIngrediente();
+            await this.getCusto();
+
+            this.pizzaIngred = await Promise.all(
+                this.pizzaIngred.map(async (lucro) => ({
+                    ...lucro,
+                    custo: lucro.custo == null ? await this.getCusto(lucro.produtoId) : lucro.custo
+                }))
+            );
+
         }
     }
 </script>

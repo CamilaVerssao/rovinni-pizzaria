@@ -4,7 +4,7 @@
             <Sidebar /> 
             <Title class="mx-5 mt-5" :title="title" /> 
             <div class="column">             
-                <PersonalizeOrder></PersonalizeOrder>
+                <PersonalizeOrder />
                 <div id="buttons" class="pt-4">            
                     <button class="btn btn-danger" @click="this.$router.push('/order')">Voltar</button>
                     <button class="btn btn-success" @click="this.$router.push('/order-payment')">Ir para pagamento  <font-awesome-icon :icon="['fas', 'chevron-right']" style="color: #ffffff;" /></button>
@@ -29,17 +29,7 @@
         PersonalizeOrder,
         Title,
         Sidebar
-      }, /*
-      methods: {
-        async getFlavors() {
-            const req = await fetch("http://localhost:3000/pizzas-prontas");
-            const data = await req.json();
-            this.sabor = data;
-        }
-      },
-      mounted() {
-        this.getFlavors();
-      }*/
+      }
     }
 </script>
 

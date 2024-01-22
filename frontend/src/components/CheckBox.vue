@@ -15,7 +15,10 @@
             isDisabled: {
                 Boolean
             }
-        }
+        },
+        computed: {
+ 
+        },
     }
 </script>
 

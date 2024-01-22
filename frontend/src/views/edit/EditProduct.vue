@@ -3,7 +3,7 @@
         <div class="all-content">
             <Sidebar />  
             <div class="top">
-                <Title class="w-25" :title="this.editing ? 'Editar Produto' : 'Novo Produto'" />
+                <Title  :title="this.editing ? 'Editar Produto' : 'Novo Produto'" />
             </div>           
             <div class="column">
                 <div id="all-fields">
@@ -71,7 +71,7 @@
                             </h1>
 
                             <select class="form-select" aria-placeholder="Digite a categoria" id="category-input" v-model="selectedTipo" required>
-                                <option value="" disabled selected hidden>{{ this.editing ? filterProduct(this.paramId)?.tipoNome ?? '' : 'Selecione' }}</option>
+                                <option value="null" disabled selected hidden>{{ this.editing ? filterProduct(this.paramId)?.tipoNome ?? '' : 'Selecione' }}</option>
                                 <option :value="tipo.nome" v-for="tipo in tipos" :key="tipo.id">{{ tipo.nome }}</option>
                             </select>
                         </div> 
@@ -81,13 +81,13 @@
                                 Tamanho
                             </h1>
 
-                            <select class="form-select" aria-placeholder="Digite a categoria" id="tamanho-input" v-model="selectedTamanho" v-if="this.selectedTipo != 'Bebida'" required>
-                                <option value="" disabled selected hidden>{{ this.editing ? filterProduct(this.paramId)?.tamanho ?? '' : 'Selecione' }}</option>
+                            <select class="form-select" id="tamanho-input" v-model="selectedTamanho" v-if="this.selectedTipo != 'Bebida'" required>
+                                <option value="null" disabled selected hidden>{{ this.editing ? (filterProduct(this.paramId)?.tamanho ?? 'null') : 'Selecione' }}</option>
                                 <option :value="tamanho.tamanho" v-for="tamanho in tamanhos" :key="tamanho.id">{{ tamanho.tamanho }}</option>
                             </select>
 
-                            <select class="form-select" aria-placeholder="Digite a categoria" id="tamanho-input" v-else required>
-                                <option value="" disabled selected hidden>{{ this.editing ? filterProduct(this.paramId)?.tamanho ?? '' : 'Selecione' }}</option>
+                            <select class="form-select"  id="tamanho-input" v-else required>
+                                <option value="null" disabled selected hidden>{{ this.editing ? (filterProduct(this.paramId)?.tamanho ?? '') : 'Selecione' }}</option>
                                 <option disabled :value="tamanho.tamanho" v-for="tamanho in tamanhos" :key="tamanho.id">{{ tamanho.tamanho }}</option>
                             </select>
                         </div> 
@@ -98,15 +98,15 @@
                             <h1 class="field-title">
                                 Volume vendas
                             </h1>
-                            <input type="number" :placeholder="this.editing ? filterProduct(this.paramId)?.volumeVendas ?? '' : 'Selecione'" class="form-control" v-model="volume_vendas" required>
+                            <input type="number" :placeholder="this.editing ? (filterProduct(this.paramId)?.volumeVendas ?? 'null') : 'Selecione'" class="form-control" v-model="volumeVendas" required>
                         </div>
 
                         <div class="product-field">
                             <h1 class="field-title">
                                 Custo
                             </h1>
-                            <input type="text" placeholder="Digite o custo" class="form-control" v-model="custo" v-if="this.selectedTipo === 'Bebida'" required>
-                            <input disabled type="number" :placeholder="this.editing ? filterProduct(this.paramId)?.custo ?? '' : 'Selecione'" class="form-control" v-else required> 
+                            <input type="number" placeholder="Digite o custo" class="form-control" v-model="custo" v-if="this.selectedTipo === 'Bebida'" required>
+                            <input disabled type="number" :placeholder="this.editing ? (filterProduct(this.paramId)?.custo ?? 'null') : 'Selecione'" class="form-control" v-else required> 
                         </div>
                     </div>
 
@@ -153,7 +153,7 @@
             preco: null,
             codigo: null,
             descricao: null,
-            volume_vendas: null,
+            volumeVendas: null,
             categoria_id: null,
             custo: null,
             estoque_minimo: null,
@@ -271,9 +271,9 @@
             addItem() {
                 const selectedIngredient = this.ingredients.find(item => item.nome === this.selected);
                 const isAlreadyAdded = this.selectedIngredients.some(item => item.nome === selectedIngredient.nome);
-                    if (selectedIngredient && !isAlreadyAdded) {
-                        this.selectedIngredients.push(selectedIngredient);
-                    }
+                if (selectedIngredient && !isAlreadyAdded) {
+                    this.selectedIngredients.push(selectedIngredient);
+                }
             },
             async getIngredients() {
                 const data = (await Axios.get('/ingrediente')).data;
@@ -320,7 +320,7 @@
                     this.selectedCategoria &&
                     this.selectedTipo &&
                     (this.selectedTipo !== 'Bebida' ? this.selectedTamanho : true) &&
-                    this.volume_vendas &&
+                    this.volumeVendas &&
                     (this.selectedTipo === 'Bebida' ? this.custo : true)
                 );
             },  
@@ -496,5 +496,6 @@
     .product-field textarea {
         width: 48vw;
     }
+    
 
 </style>

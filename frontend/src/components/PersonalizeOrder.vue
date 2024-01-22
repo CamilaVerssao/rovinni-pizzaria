@@ -3,14 +3,16 @@
        <div id="all-content">
         <div id="left-content">
             <h1 id="add-pizza">Pizza
-                <button><font-awesome-icon :icon="['fas', 'circle-plus']" style="color: #000000;" /></button><!--quado clicar aqui adc na lista abaixo do 1o pedido-->
+                <button>
+                    <font-awesome-icon :icon="['fas', 'circle-plus']" style="color: #000000;" />
+                </button>
             </h1>
             <hr>
             <div class="row d-flex" id="pizza-orders">
                 <p>Tamanho</p>
-                <select class="form-select" v-model="tamanhoSelected">
+                <select class="form-select" v-model="tamanhoSelected" @change="console.log(this.tamanhoSelected)">
                     <option disabled selected hidden>Selecione</option>
-                    <option v-for="tamanho in tamanhos" :key="tamanho.id" :value="tamanho.nome">{{ tamanho.nome }}</option>
+                    <option v-for="tamanho in tamanhos" :key="tamanho.id" :value="tamanho">{{ tamanho.tamanho }}</option>
                 </select>      
             </div>
             <div class="row d-flex">
@@ -25,10 +27,14 @@
             <div class="row">
                 <p>Sabores</p>
                 <div class="check-ingredient d-flex" v-for="sabor in sabores" :key="sabor.id">
-                    <CheckBox />
-                    <p>{{ sabor.nome }}</p>
+
+                    <div class="checkbox-field">
+                        <input type="checkbox" :value="sabor" v-model="checkedProducts" @change="console.log(this.checkedProducts)" >
+                    </div>
+
+                    <p>{{ sabor.produtoNome }}</p>
                 </div>
-                <!--<button class="pizzaAdd" @click="addToCartPizza(sabor)">Adicionar</button>-->
+                <button class="pizzaAdd" @click="addToCart(this.checkedProducts)">Adicionar</button>
             </div>
             <hr>
         </div>  
@@ -47,7 +53,7 @@
             </div> 
             <div class="class-field"> 
                 <div class="row d-flex pt-3 teste" v-for="bebida in bebidas" :key="bebida.id"> 
-                    <p>{{ bebida.nome }}</p>
+                    <p>{{ bebida.produtoNome }}</p>
                     <p style="font-weight: bold;">R$ {{ bebida.quantity ? bebida.preco * bebida.quantity : bebida.preco }}</p>
                     <input type="number" min="0" class="form-control" v-model="bebida.quantity">
                     <button class="add-btn" @click="addToCart(bebida)"><font-awesome-icon :icon="['fas', 'plus']" size="s" style="color: #000000;" /></button>
@@ -73,7 +79,14 @@
             tamanhos: null,
             tamanhoSelected: null,
             numSaboresSelected: null,
-            palavra: ""
+            palavra: "",
+            checkedProducts: [],
+            pizzaCustom: {
+                nomeProduto: "",
+                tamanho: "",
+                numSabores: 0,
+                totalCart: 0
+            }
         }),
         components: {
             CheckBox,
@@ -93,39 +106,39 @@
                 this.tamanhos = data;
             },
             addToCart(produto) {
-                produto.totalCart = produto.preco * produto.quantity;
+
+                if (produto.tipoId != 1) {
+                    if (Array.isArray(this.checkedProducts)) {
+                        const selectedFlavorsNames = this.checkedProducts.map(sabor => sabor.produtoNome);
+                        const selectedSize = this.checkedProducts.map(size => size.tamanhoId);
+                        console.log(selectedSize)
+
+                        this.pizzaCustom.nomeProduto = selectedFlavorsNames.join(', ');
+                        this.pizzaCustom.tamanho = this.tamanhoSelected.tamanho;
+                        this.pizzaCustom.numSabores = parseInt(this.numSaboresSelected);
+                        console.log(this.pizzaCustom)
+
+                        const produtoString = JSON.stringify(this.pizzaCustom);
+                        sessionStorage.setItem(produto.id, produtoString);
+
+                         /*this.pizzaCustom.totalCart = this.checkedProducts
+                            .filter(sabor => sabor.tamanhoId === selectedSize)
+                            console.log(this.pizzaCustom.totalCart)
+
+                            this.pizzaCustom.totalCart = produto.preco * produto.quantity;*/
+                    }
+                }
+                else {
+                      produto.totalCart = produto.preco * produto.quantity;
+
                 const produtoString = JSON.stringify(produto);
-                sessionStorage.setItem(produto.id, produtoString);
+                sessionStorage.setItem(produto.produtoId, produtoString);
 
-                const storedProdutoString = sessionStorage.getItem(produto.id);
-            },
-            addToCartPizza(pizza) {
-                pizza.totalCart = pizza.preco * pizza.quantity;
-                const produtoString = JSON.stringify(pizza);
-                sessionStorage.setItem(pizza.id, produtoString);
-
-                const storedProdutoString = sessionStorage.getItem(pizza.id);
-            },
-            /*filteredItemsBebida() { //fazer logica no back
-                if (!this.bebidas) return [];
-
-                const uniqueDrinkNames = new Set();
-
-                const filteredDrinks = this.bebidas.filter((bebida) => {
-                if (!uniqueDrinkNames.has(bebida.nome) && bebida.categoriaId !== 1 ) {
-                    uniqueDrinkNames.add(bebida.nome);
-                    return true;
-                }
-                return false;
-                });
-
-                for(let index = 0; index < filteredDrinks.length; index++) {
-                    filteredDrinks[index].quantity = 1;
+                const storedProdutoString = sessionStorage.getItem(produto.produtoId);
                 }
 
-                return filteredDrinks;
-
-            },*/
+              
+            },
             getCategoryName(id) {
                 if (!this.tamanhos || this.tamanhos.length === 0) {
                     return "Tamanho não encontrado";
@@ -133,8 +146,7 @@
 
                 const size = this.tamanhos.find(size => size.tamanhoId === id);
                 return size ? size.tamanho : "";
-            }, 
-          
+            }
         },
         mounted() {
             this.getFlavors();
@@ -174,7 +186,7 @@
         width: 200px;
     }
 
-    .row select, .row input {
+    .row select, .row .form-control {
         width: 100px;
     }
 
@@ -216,7 +228,7 @@
 
     .class-field  {
         height: fit-content;
-        max-height: 580px;
+        max-height: 550px;
         overflow-y: auto;
         overflow-x: hidden;
         margin-top: 20px;
@@ -251,6 +263,13 @@
     #search-bar button:hover {
         background-color: #c6c6c6;
         border: 1px solid rgb(169, 169, 169);
+    }
+
+    .teste {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: fit-content;
     }
 
 </style>

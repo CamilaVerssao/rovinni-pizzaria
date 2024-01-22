@@ -3,7 +3,7 @@
         <div class="all-content">
             <Sidebar />
             <div class="column mx-5 mt-5">
-                <Title :title="title" />
+                <Title :title="title" id="titulo" />
                 <div class="content d-flex">
                     <OrderSummary />
                     <div class="form-of-payment">
@@ -101,6 +101,7 @@
                     for(let i = 0; i < this.cart.length; i++) {
                         const productId = this.cart[i];
                         const productData = JSON.parse(sessionStorage.getItem(productId));
+                        const estoqueAtual = (await Axios.get(`/produto/${productId}`)).data.estoqueAtual;
 
                         const cartItem = {
                             pedido_id: pedidoId,
@@ -108,7 +109,11 @@
                             quantidade: productData.quantity
                         }
 
-                        await Axios.post('/pedido_item', cartItem);
+
+                        console.log((await Axios.get(`/pizza_ingrediente/${productId}`)).data);
+                        await Axios.post('/pedido_item', cartItem);   
+                        await Axios.put(`/produto/${productId}`, { estoqueAtual: estoqueAtual - productData.quantity });
+
                     }
 
                     sessionStorage.clear();
@@ -167,7 +172,6 @@
                 })
 
                 this.total = total;
-                console.log(filteredCart)
             
                 return filteredCart;
             } 

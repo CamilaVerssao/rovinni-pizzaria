@@ -13,10 +13,12 @@ const get = async (query) => {
         'tipo.*'
     ]
 
-    const params = [{
-        field: 'tipo_id',
-        value: query.tipo
-    }];
+    const params = [
+        {
+            field: 'tipo_id',
+            value: query.tipo
+        }
+    ];
     
     const join = [
         {
@@ -37,7 +39,7 @@ const get = async (query) => {
             type: 'leftJoin',
             tableName: 'tipo'
         }
-];
+    ];
 
     return await db.get('produto', params, join, fields);
 }

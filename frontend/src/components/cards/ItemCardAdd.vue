@@ -59,7 +59,7 @@
             const lowerCasePalavra = this.palavra.toLowerCase();
 
             return this.produtos.filter(prod =>
-                prod.nome.toLowerCase().includes(lowerCasePalavra)
+                prod.produtoNome.toLowerCase().includes(lowerCasePalavra)
             );
 
             }

@@ -4,9 +4,12 @@
              <Sidebar />       
              <div class="column">
                     <div class="top">  
-                        <Title :title="title" class="mx-5" />
+                        
                          
                         <div id="search-bar" class="d-flex">
+                            <div class="titulo">
+                                <Title :title="title" class="mx-5" />
+                            </div>
                             <div class="input-group mb-3" id="search-input">
                                 <span class="input-group-text" id="basic-addon1"><font-awesome-icon :icon="['fas', 'magnifying-glass']" style="color: #000000;" /></span>
                                 <input type="text" class="form-control" placeholder="Pesquise aqui" aria-label="Username" aria-describedby="basic-addon1" v-model="palavra">
@@ -17,7 +20,7 @@
                     <button @click="this.$router.push('/personalize-order')" id="personalize-btn">Personalizar</button>
                     <div class="left-content d-flex">
                         <div class="cards">
-                            <ItemCardAdd :produtos="produto" :palavra="palavra" />
+                            <ItemCardAdd :produtos="produtoFiltrado" :palavra="palavra" />
                         </div>
                         
                         <div id="all-content">
@@ -68,11 +71,12 @@
             title: 'Vender',
             produto: null,
             palavra: "",
-            cart: null,
+            cart: [],
             numItens: 0,
             tamanhos: null,
             total: 0.0,
-            selectedSize: null
+            selectedSize: null,
+            produtoFiltrado: null
         }),
         components: {
             ItemCardAdd,
@@ -93,6 +97,15 @@
             },
             alertar(msg) {
                 window.alert(msg);
+            },
+            async filterProducts() {
+                if(!this.produto) {
+                    return '';
+                }
+
+                const productsFiltered = this.produto.filter(prod => prod.estoqueAtual > 0);
+
+                return productsFiltered;
             }
         },
         computed: {
@@ -116,16 +129,16 @@
 
                     return false;
                 });
-                
                 return filteredCart;
             } 
-  },
-  mounted() {
-    this.getProducts();
-    this.cart = Object.keys(sessionStorage);
-    this.numItens = this.cart.length;
-  },
-}
+        },
+        async mounted() {
+            await this.getProducts();
+            this.cart = Object.keys(sessionStorage);
+            this.numItens = this.cart.length;
+            this.produtoFiltrado = await this.filterProducts();            
+        }
+    }
 </script>
 
 <style lang="scss" scoped>
@@ -174,14 +187,15 @@
         max-width: 400px;
         max-height: 40px;
         height: 100%;
+        width: 50%;
     }
 
     #search-bar {
-        margin: 0 auto;
-        width: 30vw;
+        width: 100vw;
         height: 110px;
         gap: 30px;
         padding: 0;
+        margin: 0 auto;
     }
 
     #search-bar h1 {
@@ -257,5 +271,6 @@
     .bottom-right {
         max-height: fit-content;
     }
+
 
 </style>

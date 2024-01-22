@@ -5,9 +5,15 @@
             <div class="column">
                 <div class="top">
                     <Title :title="title" />
-                    <Input />
+
+                    <div id="search-bar" class="d-flex">
+                         <div class="input-group mb-3" id="search-input">
+                            <span class="input-group-text" id="basic-addon1"><font-awesome-icon :icon="['fas', 'magnifying-glass']" style="color: #000000;" /></span>
+                            <input type="text" class="form-control" placeholder="Pesquise aqui" aria-label="Username" aria-describedby="basic-addon1" v-model="palavra" />       
+                        </div> 
+                    </div>
                 </div>
-                <OrderTable />
+                <OrderTable :palavra="palavra" />
                 <ReturnButton :returnHref="'/'" />
             </div>  
         </div>
@@ -17,18 +23,17 @@
 <script>
     import OrderTable from '@/components/tables/OrderTable.vue';
     import Sidebar from '@/components/Sidebar.vue';
-    import Input from '@/components/Input.vue';
     import ReturnButton from '@/components/buttons/ReturnButton.vue';
     import Title from '@/components/Title.vue';
 
     export default {
         data: () => ({
-            title: 'Pedidos'
+            title: 'Pedidos',
+            palavra: null
         }),
         components: {
             OrderTable,
             Sidebar,
-            Input,
             ReturnButton,
             Title
         }

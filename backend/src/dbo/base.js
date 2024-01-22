@@ -18,9 +18,11 @@ const get = async(tableName, params, joins, fields) => {
             }
         });
     }
+
     baseQuery.select(fields);
     //console.log(baseQuery.toSQL().sql)
     return await baseQuery;
+    
 }
 
 const getById = async(id, tableName) => {

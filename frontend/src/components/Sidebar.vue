@@ -3,7 +3,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="d-flex flex-column justify-content-between col-auto min-vh-100 align-items-center" id="backgroundSidebar">
-                    <h1 id="logo-name">Rovinni Pizzaria</h1>
+                    <a href="/" id="link-logo"><h1 id="logo-name">Rovinni Pizzaria</h1></a>
                     <ul class="nav nav-pills flex-column mt-sm-0 d-grid gap-1" id="menu">
                         <li class="nav-item">
                             <router-link to="/order" class="nav-link" aria-current="page">
@@ -99,10 +99,11 @@
     }
 
     #backgroundSidebar {
-        background-color: #ee991a ;
-        padding-top: 100px;
+        background-color: #ee991a;
+        padding-top: 50px; /* Ajuste esse valor conforme necessário */
         width: 100%;
     }
+    
     .list-group-item {
         background-color: transparent;
         border: 0;
@@ -141,6 +142,11 @@
         font-family: 'Macondo', cursive;
         font-weight: bold;
         font-size: 25px;
+    }
+
+    #link-logo {
+        text-decoration: none;
+        color: black;
     }
 
 </style>

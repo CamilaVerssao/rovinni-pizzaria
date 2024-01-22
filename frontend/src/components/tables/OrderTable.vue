@@ -13,7 +13,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="pedido in pedidos" :key="pedido.id">
+                <tr v-for="pedido in filterOrders" :key="pedido.id">
                     <td> {{ pedido.pedidoId }} 
                         <button id="details-btn" @click="this.$router.push(`/order-details/${pedido.pedidoId}`)">
                             <font-awesome-icon :icon="['fas', 'magnifying-glass-plus']" style="color: #000000;" />
@@ -42,6 +42,9 @@
             clientes: null,
             funcionarios: null,
         }),
+        props: {
+            palavra: ''
+        },
         methods: {
             goToDetails() {
                 this.$router.push('/order-details');
@@ -80,6 +83,18 @@
                 return moment(data).tz('America/Sao_Paulo').format('DD/MM/YYYY HH:mm:ss');
             }
 
+        },
+        computed: {
+            filterOrders() {
+
+                if (!this.palavra) {
+                    return this.pedidos;
+                }
+
+                return this.pedidos.filter(pedido =>
+                    pedido.pedidoId == this.palavra
+                );
+            }
         },
         mounted() {
             this.getOrders();

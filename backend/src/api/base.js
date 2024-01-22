@@ -24,7 +24,6 @@ const getById = async(req, res) => {
 const insert = async(req, res) => { console.log(req.body)
     const facade = require(`../facade/${req.params.route}`);
     const response = await facade.insert(req.body);
-   
     handleResponse(req, res, response);
     return;
 }
