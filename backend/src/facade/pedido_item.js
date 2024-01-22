@@ -5,9 +5,11 @@ const get = async (query) => {
     const fields = [
         'produto.id as produtoId',
         'pedido.id as pedidoId',
+        'tamanho.id as tamanhoId',
         'produto.*',
         'pedido.*',
-        'pedido_item.*'
+        'pedido_item.*',
+        'tamanho.*'
     ]
 
     const params = [{
@@ -27,6 +29,12 @@ const get = async (query) => {
             paramFrom: 'pedido.id',
             type: 'leftJoin',
             tableName: 'pedido'
+        },
+        {
+            paramTo: 'tamanho.id',
+            paramFrom: 'produto.tamanhoId',
+            type: 'leftJoin',
+            tableName: 'tamanho'
         }
     ];
 

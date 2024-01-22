@@ -3,8 +3,7 @@
         <div class="all-content">
              <Sidebar />       
              <div class="column">
-                    <div class="top">  
-                        
+                    <div class="top">   
                          
                         <div id="search-bar" class="d-flex">
                             <div class="titulo">
@@ -103,7 +102,7 @@
                     return '';
                 }
 
-                const productsFiltered = this.produto.filter(prod => prod.estoqueAtual > 0);
+                const productsFiltered = this.produto.filter(prod => prod.estoqueAtual >= 0);
 
                 return productsFiltered;
             }
@@ -191,11 +190,10 @@
     }
 
     #search-bar {
-        width: 100vw;
+        width: 100%;
         height: 110px;
         gap: 30px;
         padding: 0;
-        margin: 0 auto;
     }
 
     #search-bar h1 {

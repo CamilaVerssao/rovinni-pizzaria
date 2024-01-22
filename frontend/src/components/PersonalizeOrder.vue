@@ -47,7 +47,6 @@
                         <span class="input-group-text" id="basic-addon1"><font-awesome-icon :icon="['fas', 'magnifying-glass']" style="color: #000000;" /></span>
                         <input type="text" class="form-control" placeholder="Pesquise aqui" aria-label="Username" aria-describedby="basic-addon1" v-model="palavra">
                     </div>
-                    <button><font-awesome-icon :icon="['fas', 'filter']" style="color: #000000;" /> Filtrar</button>
                 </div>
 
             </div> 

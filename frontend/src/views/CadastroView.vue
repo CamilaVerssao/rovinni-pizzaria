@@ -50,6 +50,10 @@
 
                 if(this.username && this.senha) {
                     await Axios.post('/funcionario', data);
+                    this.userValue = (await Axios.post('/login', data)).data;
+                    const userString = JSON.stringify(this.userValue);
+                    localStorage.setItem(this.userValue.id, userString);
+                    
                     this.$router.push('/');
                 }
                 else {

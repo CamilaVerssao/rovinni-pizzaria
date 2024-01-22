@@ -8,9 +8,11 @@ const get = async (query) => {
         'produto.estoqueMinimo as produtoEstoqueMinimo',
         'produto.estoqueAtual as produtoEstoqueAtual',
         'ingrediente.id as ingredienteId',
+        'tamanho.id as tamanhoId',
         'produto.*',
         'pizza_ingrediente.*',
-        'ingrediente.*'
+        'ingrediente.*',
+        'tamanho.*'
     ]
 
     const params = [{
@@ -29,6 +31,12 @@ const get = async (query) => {
             paramFrom: 'ingrediente.id',
             type: 'leftJoin',
             tableName: 'ingrediente'
+        },
+        {
+            paramTo: 'produto.tamanhoId',
+            paramFrom: 'tamanho.id',
+            type: 'leftJoin',
+            tableName: 'tamanho'
         }
     ];
     return await db.get('pizza_ingrediente', params, join, fields);

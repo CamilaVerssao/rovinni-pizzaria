@@ -13,7 +13,7 @@
                     </thead>
                     <tbody>
                         <tr v-for="item in items" :key="item.id">   
-                            <td>{{ item.nome }}</td>
+                            <td>{{ item.nome }} {{ item.tamanho }}</td>
                             <td>R${{ item.preco }}</td>
                             <td>{{ item.quantidade }}</td>   
                         </tr>
@@ -75,6 +75,7 @@
             async getPedidoItems(id) {
                 const data = (await Axios.get(`/pedido_item?pedido=${id}`)).data;
                 this.items = data;
+                console.log(this.items)
             },
             formatData(data) {
                 return moment(data).format('DD/MM/YYYY');

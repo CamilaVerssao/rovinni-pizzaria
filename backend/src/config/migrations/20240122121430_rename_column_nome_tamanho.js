@@ -1,6 +1,6 @@
 exports.up = async knex => {
-    return knex.schema.alterTable('pedido', table => {
-      table.renameColumn('id', 'tamanho');
+    return knex.schema.alterTable('tamanho', table => {
+      table.renameColumn('nome', 'tamanho');
     });
   };
   

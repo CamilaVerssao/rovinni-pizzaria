@@ -6,8 +6,8 @@
             <button class="btn btn-info" @click="onPickFile">Upload File</button>
         </div>
         <div class="card-info">
-            <h1>Nome do produto </h1>
-            <h2>Preço</h2>
+            <h1>{{ this.nome ? this.nome : 'Nome do produto' }}  {{ this.tamanho ? this.tamanho : '' }}</h1>
+            <h2>{{ this.preco ? this.preco.toFixed(2) : 'Preço' }}</h2>
         </div>
     </div>
 </template>
@@ -38,6 +38,11 @@
     
                 await Axios.post('/produto', formData);
             }
+        },
+        props: {
+            nome: String,
+            preco: Number,
+            tamanho: String
         }
     }
 </script>
