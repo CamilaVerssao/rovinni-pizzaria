@@ -104,6 +104,17 @@
                 const data = (await Axios.get('/tamanho')).data;
                 this.tamanhos = data;
             },
+    
+                filterProductsByTamanho() {
+                if (!this.tamanhoSelected || !this.tamanhoSelected.id) {
+                    // Se nenhum tamanho estiver selecionado, retorna todos os produtos
+                    return this.sabores;
+                }
+
+                // Filtra os produtos com tamanhoId igual ao tamanho selecionado
+                return this.sabores.filter(sabor => sabor.tamanhoId === this.tamanhoSelected.id);
+                },
+            
             addToCart(produto) {
 
                 if (produto.tipoId != 1) {

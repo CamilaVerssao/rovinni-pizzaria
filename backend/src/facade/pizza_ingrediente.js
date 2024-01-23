@@ -16,7 +16,8 @@ const get = async (query) => {
     ]
 
     const params = [{
-       
+        field: 'produtoId',
+        value: query.produtoId
     }];
     
     const join = [

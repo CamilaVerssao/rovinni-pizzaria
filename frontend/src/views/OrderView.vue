@@ -19,7 +19,7 @@
                     <button @click="this.$router.push('/personalize-order')" id="personalize-btn">Personalizar</button>
                     <div class="left-content d-flex">
                         <div class="cards">
-                            <ItemCardAdd :produtos="produtoFiltrado" :palavra="palavra" />
+                            <ItemCardAdd :produtos="produto" :palavra="palavra" />
                         </div>
                         
                         <div id="all-content">
@@ -75,7 +75,6 @@
             tamanhos: null,
             total: 0.0,
             selectedSize: null,
-            produtoFiltrado: null
         }),
         components: {
             ItemCardAdd,
@@ -96,16 +95,8 @@
             },
             alertar(msg) {
                 window.alert(msg);
-            },
-            async filterProducts() {
-                if(!this.produto) {
-                    return '';
-                }
-
-                const productsFiltered = this.produto.filter(prod => prod.estoqueAtual >= 0);
-
-                return productsFiltered;
             }
+            
         },
         computed: {
             filterCart() {
@@ -135,7 +126,6 @@
             await this.getProducts();
             this.cart = Object.keys(sessionStorage);
             this.numItens = this.cart.length;
-            this.produtoFiltrado = await this.filterProducts();            
         }
     }
 </script>

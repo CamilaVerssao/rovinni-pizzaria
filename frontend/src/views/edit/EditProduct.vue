@@ -8,7 +8,6 @@
             <div class="column">
                 <div id="all-fields">
                     <div class="content-left" >
-                        <CardImg :nome="nome" :preco="preco" :tamanho="selectedTamanho" />   
                         <div id="select-ingredient"  v-if="this.selectedTipo !== null && this.selectedTipo !== 'Bebida'">
                             <select class="form-select" v-model="selected">
                                 <option value="" disabled selected hidden>Selecione</option>

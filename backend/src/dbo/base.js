@@ -25,17 +25,29 @@ const get = async(tableName, params, joins, fields) => {
     
 }
 
-const getById = async(id, tableName) => {
-    const result = await db(tableName)
-        .select()
-        .where('id', id)
-        .where('deleted_at', null)
-        .first()
-        .catch((error => {
-            console.log(error.message);
-        }));
+const getById = async(id, tableName, params, joins, fields) => {
+   
+    let baseQuery = db(tableName).where(`${tableName}.deleted_at`, null).where(`${tableName}.id`, id).first();
 
-        return result;
+    if(params) {
+        params.forEach(param => {
+            if(param.value && param.field){
+                baseQuery = baseQuery.where(param.field, param.value);
+            }
+        });
+    }
+
+    if(joins) {
+        joins.forEach(({ paramFrom, paramTo, type, tableName }) => {
+            if(paramFrom && paramTo && type) {
+                baseQuery = baseQuery[type](tableName, paramFrom, paramTo);
+            }
+        });
+    }
+
+    baseQuery.select(fields);
+    //console.log(baseQuery.toSQL().sql)
+    return await baseQuery;
 }
 
 const insert = async(object, tableName) => {

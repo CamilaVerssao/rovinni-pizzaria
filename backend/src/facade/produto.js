@@ -44,8 +44,48 @@ const get = async (query) => {
     return await db.get('produto', params, join, fields);
 }
 const getById = async (id) => {
+
     if(!id) return;
-    return await db.getById(id, 'produto');
+
+    const fields = [
+        'produto.id as produtoId',
+        'produto.nome as produtoNome',
+        'categoria.nome as categoriaNome',
+        'tipo.nome as tipoNome',
+        'produto.*',
+        'tamanho.*',
+        'categoria.*',
+        'tipo.*'
+    ]
+
+    const params = [
+        {
+           
+        }
+    ];
+    
+    const join = [
+        {
+            paramTo: 'produto.tamanho_id',
+            paramFrom: 'tamanho.id',
+            type: 'leftJoin',
+            tableName: 'tamanho'
+        },
+        {
+            paramTo: 'produto.categoria_id',
+            paramFrom: 'categoria.id',
+            type: 'leftJoin',
+            tableName: 'categoria'
+        },
+        {
+            paramTo: 'produto.tipo_id',
+            paramFrom: 'tipo.id',
+            type: 'leftJoin',
+            tableName: 'tipo'
+        }
+    ];
+
+    return await db.getById(id, 'produto', params, join, fields);
 }
 const insert = async (object) => {
     try {
