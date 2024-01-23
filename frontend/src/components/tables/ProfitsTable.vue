@@ -42,7 +42,6 @@
             async getPizzaIngrediente() {
                 const data = (await Axios.get('/pizza_ingrediente')).data;
                 this.pizzaIngred = data;
-                console.log(this.pizzaIngred)
             },
             async getCusto(produtoId) {
                 if (!this.pizzaIngred) {

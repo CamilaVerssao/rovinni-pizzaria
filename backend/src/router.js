@@ -19,7 +19,7 @@ router.use((_req, res, next) => {
   router.post(`/logout`, logout.insert);
   router.get(`/:route`, auth, api.get);
   router.get(`/:route/:id`, auth, api.getById);
-  router.post(`/:route`,  api.insert);
+  router.post(`/:route`, api.insert);
   router.put(`/:route/:id`, auth, api.update);
   router.delete(`/:route/:id`, auth, api.remove);
 

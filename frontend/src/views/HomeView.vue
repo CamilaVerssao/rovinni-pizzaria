@@ -4,16 +4,16 @@
       <Sidebar />
       <div class="column">
         <div class="top">
-          <div class="title-field">
-              <Title :title="title"/>
-          </div>
-          <div id="search-bar" class="d-flex">
+          <div class="title-field d-flex">
+              <Title :title="title"/> <div id="search-bar" class="d-flex">
             <div class="input-group mb-3" id="search-input">
               <span class="input-group-text" id="basic-addon1"><font-awesome-icon :icon="['fas', 'magnifying-glass']" style="color: #000000;" /></span>
               <input type="text" class="form-control" placeholder="Pesquise aqui" aria-label="Username" aria-describedby="basic-addon1" v-model="palavra" />       
             </div>
             <button @click="this.$router.push('/new-product')" id="add-btn"><font-awesome-icon :icon="['fas', 'circle-plus']" size="xl" style="color: #000000;" /> Novo</button>
           </div>
+          </div>
+         
         </div>
           <div class="cards"> 
             <ItemCard :produtos="produto" :detailHref="'/product-details'" :palavra="palavra" />
@@ -108,7 +108,6 @@ export default {
         width: 30vw;
         height: 110px;
         gap: 30px;
-        margin-top: 20px;
     }
 
     #search-bar h1 {

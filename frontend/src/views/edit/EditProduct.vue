@@ -113,7 +113,7 @@
                         <h1 class="field-title">
                             Descrição
                         </h1>
-                        <textarea name="desc-field" id="desc-field" cols="30" rows="10" :placeholder="this.editing ? filterProduct(this.paramId)?.descricao ?? '' : 'Digite a descrição'"  v-model="descricao"></textarea>
+                        <textarea name="desc-field" id="desc-field" cols="30" rows="10" :placeholder="this.editing ? filterProduct(this.paramId)?.produtoDescricao ?? '' : 'Digite a descrição'"  v-model="descricao"></textarea>
                     </div>
                     <div id="buttons" class="pt-4">
                         <button class="btn btn-danger" @click="this.$router.push('/')">Voltar</button>

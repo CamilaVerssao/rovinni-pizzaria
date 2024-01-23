@@ -5,6 +5,7 @@ const get = async (query) => {
     const fields = [
         'produto.id as produtoId',
         'produto.nome as produtoNome',
+        'produto.descricao as produtoDescricao',
         'categoria.nome as categoriaNome',
         'tipo.nome as tipoNome',
         'produto.*',
@@ -50,6 +51,7 @@ const getById = async (id) => {
     const fields = [
         'produto.id as produtoId',
         'produto.nome as produtoNome',
+        'produto.descricao as produtoDescricao',
         'categoria.nome as categoriaNome',
         'tipo.nome as tipoNome',
         'produto.*',
@@ -88,17 +90,7 @@ const getById = async (id) => {
     return await db.getById(id, 'produto', params, join, fields);
 }
 const insert = async (object) => {
-    try {
         return await db.insert(object, 'produto');
-    }
-    catch(error) {
-        if (error.details) {
-            const errors = error.details.map((el) => el.message)
-            return { errors }
-          } else {
-            return { errors: [error.message] }
-          }
-    }
 }
 const update = async (id, object) => {
     if(!id) return;
