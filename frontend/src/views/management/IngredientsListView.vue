@@ -2,19 +2,16 @@
     <div>
         <div class="all-content">
             <Sidebar />
-            <div class="column">
-                <div class="top">
-                    <Title :title="title" />
-
-                    <div id="search-bar" class="d-flex">
-                         <div class="input-group mb-3" id="search-input">
+            <div class="column d-flex align-items-center position-relative">
+                <div class="top w-100 mb-5 d-flex">
+                    <Title :title="title"  class="titulo mx-5 position-absolute"/>
+                    <div id="search-bar" class="d-flex align-items-center">
+                         <div class="input-group" id="search-input">
                             <span class="input-group-text" id="basic-addon1"><font-awesome-icon :icon="['fas', 'magnifying-glass']" style="color: #000000;" /></span>
                             <input type="text" class="form-control" placeholder="Pesquise aqui" aria-label="Username" aria-describedby="basic-addon1" v-model="palavra" />       
                         </div>
-
                         <button @click="this.$router.push('/new-ingredient')" id="add-btn"><font-awesome-icon :icon="['fas', 'circle-plus']" size="xl" style="color: #000000;" /> Novo</button>
                     </div>
-
                 </div>
                 <IngredientsTable :palavra="palavra"/>
                 <ReturnButton :returnHref="'/'" />
@@ -54,19 +51,11 @@
 
 <style lang="scss" scoped>
 
-    .top {
-        margin-left: 50px;
-    }
-
-     #all-content {
-        margin: 0 auto;
-        display: flex;
-   }
 
    .column {
-        display: flex;
         flex-direction: column;
-        width: 100%;
+        width: 100vw;
+        height: 100vh;
    }
 
    #search-input {
@@ -77,11 +66,7 @@
     }
 
     #search-bar {
-        margin: 0 auto;
-        width: 30vw;
-        height: 110px;
-        gap: 30px;
-        padding: 0;
+        height: fit-content;
     }
 
     #search-bar h1 {

@@ -80,9 +80,8 @@
     #table-content {
         text-align: center;
         width: 60vw;
-        margin: 0 auto;
         height: fit-content;
-        max-height: 660px;
+        max-height: 70vh;
         overflow-y: auto;
     }
 

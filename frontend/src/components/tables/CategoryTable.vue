@@ -14,7 +14,7 @@
                     <td>{{ categoria.nome }}</td>
                     <td>{{ categoria.descricao }}</td>
                     <td><CheckBox :isChecked="categoria.ativo" :isDisabled="true" /></td>
-                    <td id="buttons">
+                    <td id="buttons" class="d-flex gap-3 justify-content-center">
                         <EditButton :href="`/#/edit-category/${categoria.id}`" />
                         <DeleteButton @click="deleteCategory(categoria.id)" />
                     </td> 
@@ -82,23 +82,13 @@
 </script>
 
 <style lang="scss" scoped>
+
     #table-content {
         text-align: center;
         width: 60vw;
-        margin: 0 auto;
         height: fit-content;
-        max-height: 660px;
+        max-height: 70vh;
         overflow-y: auto;
-    }
-
-    #details {
-        display: flex;  
-    }
-
-    #buttons {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-    }
+    }   
 
 </style>
