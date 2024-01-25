@@ -2,13 +2,12 @@
     <div >
         <div class="all-content">
              <Sidebar />       
-             <div class="column">
-                    <div class="top">   
+             <div class="column d-flex align-items-center position-relative">
+                    <div class="top w-100 mb-5 d-flex">   
                          
                         <div id="search-bar" class="d-flex">
-                            <div class="titulo">
-                                <Title :title="title" class="mx-5" />
-                            </div>
+                            <Title :title="title" class="mx-5" />
+                          
                             <div class="input-group mb-3" id="search-input">
                                 <span class="input-group-text" id="basic-addon1"><font-awesome-icon :icon="['fas', 'magnifying-glass']" style="color: #000000;" /></span>
                                 <input type="text" class="form-control" placeholder="Pesquise aqui" aria-label="Username" aria-describedby="basic-addon1" v-model="palavra">

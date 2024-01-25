@@ -2,18 +2,15 @@
     <div>        
         <div class="all-content">        
             <Sidebar />
-            <div class="column">
-                <div class="top">
-                    <Title :title="title" />
-                    
-                    <div id="search-bar" class="d-flex">
-                         <div class="input-group mb-3" id="search-input">
+            <div class="column d-flex align-items-center position-relative">
+                <div class="top w-100 mb-5 d-flex">
+                    <Title :title="title" class="titulo mx-5 position-absolute"/>         
+                    <div id="search-bar" class="d-flex align-items-center">
+                         <div class="input-group" id="search-input">
                             <span class="input-group-text" id="basic-addon1"><font-awesome-icon :icon="['fas', 'magnifying-glass']" style="color: #000000;" /></span>
                             <input type="text" class="form-control" placeholder="Pesquise aqui" aria-label="Username" aria-describedby="basic-addon1" v-model="palavra" />       
                         </div>
-
                     </div>
-
                 </div>
                 <StockTable :palavra="palavra" />
                 <ReturnButton :returnHref="'/'" />
@@ -57,34 +54,25 @@
 <style lang="scss" scoped>
 
     h1 {
-            margin-left: 300px;
-            font-size: 25px;
-            margin-top: 30px;
-            height: fit-content;
-        }
-    
-        #return-btn {
-            position: fixed;
-            bottom: 40px;
-            right: 40px;
-        }
+        margin-left: 300px;
+        font-size: 25px;
+        margin-top: 30px;
+        height: fit-content;
+    }
 
-        #all-content {
-            margin: 0 auto;
-            display: flex;
-         }
+    #return-btn {
+        position: fixed;
+        bottom: 40px;
+        right: 40px;
+    }
 
-        .column {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-        }
+    .column {
+        flex-direction: column;
+        width: 100vw;
+        height: 100vh;
+    }
 
-        .top {
-            margin-left: 50px;
-        }
-
-        #search-input {
+    #search-input {
         width: 100%;
         max-width: 450px;
         max-height: 40px;
@@ -92,11 +80,7 @@
     }
 
     #search-bar {
-        margin: 0 auto;
-        width: 30vw;
-        height: 110px;
-        gap: 30px;
-        padding: 0;
+        height: fit-content;
     }
 
     #search-bar h1 {

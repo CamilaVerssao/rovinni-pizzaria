@@ -106,27 +106,13 @@
 </script>
 
 <style lang="scss" scoped>
+
     #table-content {
         text-align: center;
         width: 60vw;
-        margin: 0 auto;
         height: fit-content;
-        max-height: 660px;
+        max-height: 70vh;
         overflow-y: auto;
-    }
-
-    #details {
-        display: flex;  
-    }
-
-    #details button {
-        background-color: transparent;
-        border: 0;
-    }
-
-    #details-btn {
-        background-color: transparent;
-        border: none;
     }
 
 </style>
