@@ -17,7 +17,7 @@
 <style lang="scss" scoped>
 
     h1 {
-        font-size: 25px;
+        font-size: 3vh;
         height: fit-content; 
     }
    

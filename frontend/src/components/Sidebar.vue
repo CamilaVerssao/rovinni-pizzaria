@@ -2,8 +2,10 @@
     <div>
         <div class="container-fluid">
             <div class="row">
-                <div class="d-flex flex-column justify-content-between col-auto min-vh-100 align-items-center" id="backgroundSidebar">
-                    <a href="/" id="link-logo"><h1 id="logo-name">Rovinni Pizzaria</h1></a>
+                <div class="d-flex flex-column justify-content-between col-auto min-vh-100 align-items-center py-5" id="backgroundSidebar">
+                    <a href="/" id="link-logo">
+                        <h1 id="logo-name">Rovinni Pizzaria</h1>
+                    </a>
                     <ul class="nav nav-pills flex-column mt-sm-0 d-grid gap-1" id="menu">
                         <li class="nav-item">
                             <router-link to="/order" class="nav-link" aria-current="page">
@@ -94,14 +96,13 @@
     @import url('https://fonts.googleapis.com/css2?family=Macondo&display=swap');
 
     .container-fluid {
-       height: 100%;
-       width: 250px;
+       height: 100vh;
+       width: 15vw;
     }
 
     #backgroundSidebar {
         background-color: #ee991a;
-        padding-top: 50px; /* Ajuste esse valor conforme necessário */
-        width: 100%;
+        width: 100vw;
     }
     
     .list-group-item {
@@ -109,11 +110,11 @@
         border: 0;
         padding-top: 0;
         padding-bottom: 0;
-        padding-left: 28px;
+        padding-left: 1.8rem;
     } 
 
     .nav-link {
-        font-size: 20px;
+        font-size: 2.5vh;
         color: black;
         transition: 0.2s;
     }
@@ -134,19 +135,27 @@
         color: black;
     }
 
-    .dropdown {
-        padding-bottom: 20px;
-    }
-
     #logo-name {
         font-family: 'Macondo', cursive;
         font-weight: bold;
-        font-size: 25px;
+        font-size: 1.5rem;
     }
 
     #link-logo {
         text-decoration: none;
         color: black;
+    }
+
+    //MediaQuery
+    @media only screen and (max-device-width: 1024px) {
+        .nav-item span {
+            display: none;
+        }
+    }
+    @media only screen and (max-device-width: 1023px) {
+        #logo-name {
+            font-size: 1rem;    
+        }
     }
 
 </style>

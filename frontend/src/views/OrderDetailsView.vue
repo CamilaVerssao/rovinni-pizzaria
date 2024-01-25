@@ -1,10 +1,10 @@
 <template>
     <div>
-        <div class="all-content">
+        <div class="all-content d-flex w-100">
             <Sidebar />
-            <div class="content mx-5 mt-5">
-                <Title :title="title" />
-                <div class="column">
+            <div class="content d-flex w-100 position-relative">
+                <Title :title="title" class="titulo position-absolute my-5 mx-5" />
+                <div class="column d-flex">
                     <OrderDetailsTable />
                 </div> 
             </div>
@@ -31,16 +31,9 @@
 </script>
 
 <style lang="scss" scoped>
-    .all-content {
-        display: flex;
-        margin: 0 auto;
-        width: 100%;
-    }
 
-   .column {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-   }
+    .titulo {
+        height: fit-content;
+    }
     
 </style>

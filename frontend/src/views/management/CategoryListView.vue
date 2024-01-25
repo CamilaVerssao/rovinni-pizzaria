@@ -65,7 +65,10 @@
         bottom: 40px;
         right: 40px;
     }
-    
+
+    .titulo {
+
+    }
   
    .all-content .column {
         flex-direction: column;
@@ -75,8 +78,8 @@
 
    #search-input {
         width: 100%;
-        max-width: 450px;
-        max-height: 40px;
+        max-width: 50vw;
+        max-height: 10vh;
         height: 100%;
     }
 
@@ -85,15 +88,14 @@
     }
 
     #search-bar h1 {
-        font-size: 25px;       
+        font-size: 2.5vh;       
     }
 
     #search-bar button {
         background-color: transparent;
         border: 1px solid #DEE2E6;
         border-radius: 10px;  
-        height: 40px;
-        width: 150px;
+        width: 10vw;
     }
 
     #search-bar button:hover {

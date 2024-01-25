@@ -53,6 +53,10 @@
 
 <style lang="scss" scoped>
 
+    .all-content {
+        
+    }
+
     h1 {
         margin-left: 300px;
         font-size: 25px;

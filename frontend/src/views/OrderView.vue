@@ -131,6 +131,12 @@
 
 <style lang="scss" scoped>
 
+    .all-content {
+        width: 100%;
+        margin: 0 auto;
+        display: flex;
+    }
+
    .column button {
     margin-left: 40px;
    }
