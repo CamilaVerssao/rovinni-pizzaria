@@ -97,10 +97,10 @@
     .botao .btn {
         background-color: black;
         color: white;
-        font-size: 18px;
+        font-size: 1.8vh;
         border: 0;        
         transition: 0.6s;
-        margin-top: 10px;
+        margin-top: 1.2vh;
     }
 
     .botao .btn:hover {

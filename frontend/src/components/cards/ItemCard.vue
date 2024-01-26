@@ -1,5 +1,5 @@
 <template>
-    <div class="all-content">
+    <div class="all-content ">
         <div id="card-content" v-for="produto in filterProduct" :key="produto.produtoId" @click="this.$emit('produtoClicado', produto)" > <!--se o card for bebida, não aparece a lista de ingredientes para editar-->
             <div class="card-img" @click="goToInfo(produto.produtoId)"></div>
             <div class="card-info" @click="goToInfo(produto.produtoId)">
@@ -93,6 +93,12 @@
 </script>
 
 <style lang="scss" scoped>
+
+    .all-content { 
+        flex-wrap: wrap;
+        overflow-y: auto;
+    }
+
     #card-content {
         position: relative;
         width: 200px;
@@ -102,10 +108,8 @@
         cursor: pointer;
         transition: all 1s;
         background: #fff;
-        margin-top: 40px;
         padding: 8px;
         padding-bottom: 70px;
-        margin: 35px;
     }
 
     #card-content:hover {

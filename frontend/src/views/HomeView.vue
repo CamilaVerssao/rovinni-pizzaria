@@ -1,12 +1,12 @@
 <template>
   <div>  
-    <div class="all-content">
+    <div class="all-content d-flex">
       <Sidebar />
-      <div class="column">
-        <div class="top">
-          <div class="title-field d-flex">
+      <div class="column d-flex">
+        <div class="top mt-5">
+          <div class="title-field d-flex mx-5">
               <Title :title="title"/> <div id="search-bar" class="d-flex">
-            <div class="input-group mb-3" id="search-input">
+            <div class="input-group" id="search-input">
               <span class="input-group-text" id="basic-addon1"><font-awesome-icon :icon="['fas', 'magnifying-glass']" style="color: #000000;" /></span>
               <input type="text" class="form-control" placeholder="Pesquise aqui" aria-label="Username" aria-describedby="basic-addon1" v-model="palavra" />       
             </div>
@@ -15,8 +15,9 @@
           </div>
          
         </div>
-          <div class="cards"> 
-            <ItemCard :produtos="produto" :detailHref="'/product-details'" :palavra="palavra" />
+          <div class="cards  ">
+              <ItemCard :produtos="produto" :detailHref="'/product-details'" :palavra="palavra" />
+
           </div>
       </div>
     </div>       
@@ -64,34 +65,24 @@ export default {
 <style>
 
   .top {
-    margin-top: 50px;
   }
 
   .title-field {
-    margin-left: 70px;
-  }
-
-  .cards .all-content  { 
-    display: flex;
-    flex-wrap: wrap;
-    margin-left: 30px;
     height: fit-content;
-    width: fit-content;
-    max-width: 2000px;
-    max-height: 660px;
-    overflow-y: auto;
   }
 
   .all-content {
-        display: flex;
-        margin: 0 auto;
-        width: 100%;
-    }
+      display: flex;
+      width: fit-content;
+      height: fit-content;
+      max-width: 100%;
+      max-height: 100%;
+  }
 
     .column {
         display: flex;
-        margin: 0 auto;
         flex-direction: column;
+        height: 100%;
         width: 100%;
     }
 
@@ -106,7 +97,7 @@ export default {
     #search-bar {
         margin: 0 auto;
         width: 30vw;
-        height: 110px;
+        height: fit-content;
         gap: 30px;
     }
 
@@ -130,6 +121,15 @@ export default {
     #search-bar #add-btn {
         background-color: transparent;
         border: 0;
+    }
+
+    .cards {
+      max-height: 60vh;
+      height: fit-content;
+      width: fit-content;
+      max-width: 90vw;
+      max-height: 70vh;
+      display: flex;
     }
 
 </style>

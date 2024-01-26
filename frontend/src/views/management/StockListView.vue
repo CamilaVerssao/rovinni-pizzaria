@@ -3,7 +3,7 @@
         <div class="all-content">        
             <Sidebar />
             <div class="column d-flex align-items-center position-relative">
-                <div class="top w-100 mb-5 d-flex">
+                <div class="top w-100 mb-5 d-flex mt-5">
                     <Title :title="title" class="titulo mx-5 position-absolute"/>         
                     <div id="search-bar" class="d-flex align-items-center">
                          <div class="input-group" id="search-input">

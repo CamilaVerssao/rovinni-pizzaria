@@ -2,51 +2,52 @@
     <div >
         <div class="all-content">
              <Sidebar />       
-             <div class="column d-flex align-items-center position-relative">
-                    <div class="top w-100 mb-5 d-flex">   
+             <div class="column">
+                    <div class="top ">   
                          
-                        <div id="search-bar" class="d-flex">
+                        <div id="search-bar" class="d-flex mt-5 mb-5">
                             <Title :title="title" class="mx-5" />
                           
-                            <div class="input-group mb-3" id="search-input">
+                            <div class="input-group" id="search-input">
                                 <span class="input-group-text" id="basic-addon1"><font-awesome-icon :icon="['fas', 'magnifying-glass']" style="color: #000000;" /></span>
                                 <input type="text" class="form-control" placeholder="Pesquise aqui" aria-label="Username" aria-describedby="basic-addon1" v-model="palavra">
                             </div>
                         </div>
 
                     </div>
-                    <button @click="this.$router.push('/personalize-order')" id="personalize-btn">Personalizar</button>
-                    <div class="left-content d-flex">
-                        <div class="cards">
+                    <div class="left-content justify-content-center d-flex align-items-center">
+                        <div class="cards d-flex justify-content-center flex-column">                    
+                            <button @click="this.$router.push('/personalize-order')" id="personalize-btn" class="mb-3">Personalizar</button>
                             <ItemCardAdd :produtos="produto" :palavra="palavra" />
                         </div>
                         
-                        <div id="all-content">
-                            <h1 id="itens-number"><font-awesome-icon :icon="['fas', 'cart-shopping']" style="color: #000000;" /> {{ numItens }} itens</h1>
-                            <div class="top-right">
-                                <div class="item-row d-flex right-position" v-for="carrinho in filterCart" :key="carrinho.produtoId">
-                                    <p>{{ carrinho.produtoNome }} {{ carrinho.tamanho }}</p>
-                                    <p style="font-weight: bold;">R$ {{ carrinho.preco.toFixed(2) }}</p>
-                                    <p style="font-weight: bold;">R$ {{ carrinho.totalCart.toFixed(2) }}</p>
-                                    <button @click="deleteItem(carrinho.produtoId)" id="x-btn"><font-awesome-icon :icon="['fas', 'xmark']" style="color: #000000;"/></button>
-                                </div> 
-                            </div>
-                            <hr>
-                            <div class="bottom-right">
-                                <div class="item-row d-flex right-position">
-                                    <p>Subtotal</p>
-                                    <p class="right-position">R$ {{ total.toFixed(2) }}</p>
+                        <div class="right-content w-50 d-flex justify-content-center">
+                            <div class="right-side w-75 h-100">
+                                <h1 id="itens-number"><font-awesome-icon :icon="['fas', 'cart-shopping']" style="color: #000000;" /> {{ numItens }} itens</h1>
+                                <div class="top-right">
+                                    <div class="item-row d-flex right-position" v-for="carrinho in filterCart" :key="carrinho.produtoId">
+                                        <p>{{ carrinho.produtoNome }} {{ carrinho.tamanho }}</p>
+                                        <p style="font-weight: bold;">R$ {{ carrinho.preco.toFixed(2) }}</p>
+                                        <p style="font-weight: bold;">R$ {{ carrinho.totalCart.toFixed(2) }}</p>
+                                        <button @click="deleteItem(carrinho.produtoId)" id="x-btn"><font-awesome-icon :icon="['fas', 'xmark']" style="color: #000000;"/></button>
+                                    </div> 
                                 </div>
-                                <div class="item-row d-flex right-position">
-                                    <p style="font-weight: bold; font-size: 28px;">Total</p>
-                                    <p class="total" style="font-weight: bold; font-size: 28px;" >R$ {{ total.toFixed(2) }}</p>
+                                <hr>
+                                <div class="bottom-right">
+                                    <div class="item-row d-flex right-position">
+                                        <p>Subtotal</p>
+                                        <p class="right-position">R$ {{ total.toFixed(2) }}</p>
+                                    </div>
+                                    <div class="item-row d-flex right-position">
+                                        <p style="font-weight: bold; font-size: 28px;">Total</p>
+                                        <p class="total" style="font-weight: bold; font-size: 28px;" >R$ {{ total.toFixed(2) }}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        
                         <div id="buttons" class="pt-4">            
                             <button class="btn btn-success" @click="this.filterCart.length !== 0 ? this.$router.push('/order-payment') : this.alertar('Adicone ao menos um item no carrinho.')">Ir para pagamento  <font-awesome-icon :icon="['fas', 'chevron-right']" style="color: #ffffff;" /></button>
-                        </div>     
+                        </div>  
+                        </div>   
                     </div>
              </div>
         </div>
@@ -133,21 +134,30 @@
 
     .all-content {
         width: 100%;
+        height: 100vh;
         margin: 0 auto;
         display: flex;
     }
 
    .column button {
-    margin-left: 40px;
+        margin-left: 40px;
+   }
+
+   .cards {
+        height: fit-content;
+        max-height: 70vh;
+        width: 50vw;
+        max-width: 50%;
    }
 
   .cards div {
     display: flex;
+    justify-content: center;
     height: fit-content;
-    max-height: 600px;
+    max-height: 70vh;
     overflow-y: auto;
-    width: 800px;
     flex-wrap: wrap;
+    gap: 30px;
   }
 
   #buttons {
@@ -155,7 +165,6 @@
         display: flex;
         bottom: 40px;
         right: 40px;
-        gap: 25px;
     }
 
     #personalize-btn {
@@ -164,7 +173,6 @@
         border: 0;
         border-radius: 20px;
         padding: 8px;
-        margin-bottom: 30px;
         transition: all 0.5s;
     }
 
@@ -173,7 +181,10 @@
     }
 
     .left-content {
-        gap: 200px;
+        width: 100%;
+    }
+    .right-content {
+        width: 75vw;
     }
 
     #search-input {
@@ -186,9 +197,9 @@
 
     #search-bar {
         width: 100%;
-        height: 110px;
+        height: fit-content;
         gap: 30px;
-        padding: 0;
+        margin: 0;
     }
 
     #search-bar h1 {
@@ -208,7 +219,7 @@
     }
 
     
-    #all-content {
+    .rifht-content {
         width: 28vw;
     }
 
@@ -248,12 +259,6 @@
         max-height: 240px;
         height: fit-content;
         overflow-y: auto;
-    }
-
-    #discount-paragraph {
-        display: flex;
-        justify-content: flex-end;
-        color: #4adaa6;
     }
 
     .right-position {
