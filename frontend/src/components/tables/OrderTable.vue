@@ -20,7 +20,7 @@
                         </button>
                     </td>     
                     <td>{{ formatData(pedido.pedidoCreatedAt) }}</td>
-                    <td>{{ pedido.nome }}</td>
+                    <td>{{ pedido.clienteNome }}</td>
                     <td>{{ pedido.username ? pedido.username : 'Não' }}</td>
                     <td>R${{ pedido.total }}</td>
                     <td>{{ pedido.pagamento !== null ? pedido.pagamento : 'Não' }}</td>

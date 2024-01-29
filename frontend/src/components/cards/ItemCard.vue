@@ -2,6 +2,7 @@
     <div class="all d-flex justify-content-center mt-5">
         <div class="all-content d-flex">
             <div id="card-content" v-for="produto in filterProduct" :key="produto.produtoId" @click="this.$emit('produtoClicado', produto)"> 
+                <div class="card-img"></div>
                 <div class="card-info" @click="goToInfo(produto.produtoId)">
                     <h1>{{ produto.produtoNome }} {{ produto.tamanho }}</h1>
                     <h2>R$ {{ produto.preco }}</h2>
@@ -98,10 +99,12 @@
     .all-content { 
         width: 90%;
         height: fit-content;
-        max-height: 80vh;
+        max-height: 70vh;
         overflow-y: auto;
         flex-flow: row wrap;
-        gap: 3rem;
+        justify-content: flex-start;
+        gap: 4rem;
+        padding: 2vh;
     }
 
     #card-content {

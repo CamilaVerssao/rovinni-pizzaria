@@ -90,18 +90,23 @@
                     pagamento: this.payment,
                     status: this.status,
                     total: this.total,
-                    funcionario_id: this.funcionario.id,
+                    funcionario_id: this.funcionario.funcionarioId,
                     cliente_id: 1
                 }
 
                 if(this.payment) {
                     const pedido = (await Axios.post('/pedido', data)).data;
                     const pedidoId = pedido.id;
+                    const promises = [];
 
                     for(let i = 0; i < this.cart.length; i++) {
                         const productId = this.cart[i];
                         const productData = JSON.parse(sessionStorage.getItem(productId));
-                        const estoqueAtual = (await Axios.get(`/produto/${productId}`)).data.estoqueAtual;
+                        const estoqueAtualProd = (await Axios.get(`/pizza_ingrediente?produtoId=${productId}`)).data.ingredEstoqueAtual;
+
+                        const produto = (await Axios.get(`/pizza_ingrediente?produtoId=${productId}`)).data;
+                        const ingred = (await Axios.get(`/ingrediente?produtoId=${productId}`)).data;
+                        //console.log(produto)
 
                         const cartItem = {
                             pedido_id: pedidoId,
@@ -109,12 +114,13 @@
                             quantidade: productData.quantity
                         }
 
-
-                        console.log((await Axios.get(`/pizza_ingrediente/${productId}`)).data);
-                        await Axios.post('/pedido_item', cartItem);   
-                        await Axios.put(`/produto/${productId}`, { estoqueAtual: estoqueAtual - productData.quantity });
-
+                        //console.log((await Axios.get(`/pizza_ingrediente/${productId}`)).data);
+                        promises.push(Axios.post('/pedido_item', cartItem)); 
+                        console.log(promises.push(Axios.put(`/ingrediente/${produto.ingredienteId}`, { estoqueAtual: estoqueAtual - estoqueAtualProd })));
+                        //promises.push(Axios.put(`/pizza_ingrediente?produtoId=${productId}`, { estoqueAtual: estoqueAtual - quantidade }));
                     }
+
+                    await Promise.all(promises);
 
                     sessionStorage.clear();
 

@@ -206,7 +206,8 @@
                 associationPromises = this.selectedIngredients.map(async (ingredient) => {
                     const associationData = {
                         prod_id: productId,
-                        ingred_id: ingredient.id
+                        ingred_id: ingredient.id,
+                        quantidade: createdProduct.tamanhoId
                     };
                 
                     await Axios.post('/pizza_ingrediente', associationData);

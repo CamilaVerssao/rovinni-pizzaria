@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="teste d-flex justify-content-center">
         <div id="card-content" v-for="produto in filterProduct" :key="produto.produtoId" @click="addItemToCart(produto)">
             <div class="card-img"></div>
             <div class="card-info">
@@ -81,6 +81,7 @@
         background: #fff;
         padding: 8px;
         padding-bottom: 70px;
+        display: flex;
     }
 
     #card-content:hover {

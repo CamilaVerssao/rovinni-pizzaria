@@ -67,6 +67,9 @@
 
     .card-img {
         background: rgb(241, 241, 241);
+        background-image: url("https://diariodonordeste.verdesmares.com.br/image/contentid/policy:1.3277542:1663012513/Pizza%20de%20Calabresa.jpg?f=4x3&$p$f=eceb3e7");
+        background-size: cover;
+        background-position: center;
         width: 100%;
         height: 100%;
         display: grid;

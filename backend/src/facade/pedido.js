@@ -4,10 +4,26 @@ const get = async (query) => {
 
     const fields = [
         'pedido.id as pedidoId',
+        'pedido.pagamento',
+        'pedido.status',
+        'pedido.total',
+        'pedido.funcionarioId as pedidoFuncionarioId',  
+        'pedido.clienteId as pedidoClienteId',
+        'pedido.updatedAt as pedidoUpdatedAt',
         'pedido.createdAt as pedidoCreatedAt', 
-        'pedido.*',
-        'funcionario.*',
-        'cliente.*'
+        'pedido.deletedAt as pedidoDeletedAt', 
+        'funcionario.id as funcionarioId',
+        'funcionario.username',
+        'funcionario.senha',
+        'funcionario.createdAt as funcionarioCreatedAt',
+        'funcionario.updatedAt as funcionarioUpdatedAt',
+        'funcionario.deletedAt as funcionarioDeletedAt',
+        'cliente.id as clienteId',
+        'cliente.nome as clienteNome',
+        'cliente.cpf',
+        'cliente.createdAt as clienteCreatedAt',
+        'cliente.updatedAt as clienteUpdatedAt',
+        'cliente.deletedAt as clienteDeletedAt'
     ]
 
     const params = [{

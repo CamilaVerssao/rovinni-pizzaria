@@ -3,20 +3,37 @@ const db = require('../dbo/base');
 const get = async (query) => {
 
     const fields = [
+        'pizzaIngrediente.quantidade as quantidadeIngrediente',
         'produto.id as produtoId',
         'produto.nome as produtoNome',
-        'produto.estoqueMinimo as produtoEstoqueMinimo',
-        'produto.estoqueAtual as produtoEstoqueAtual',
+        'produto. preco',
+        'produto.volumeVendas',
+        'produto.custo',
+        'produto.categoriaId',
+        'produto.tipoId',
+        'produto.tamanhoId',
+        'produto.deleted_at as prodDeletedAt',
+        'produto.updated_at as prodUpdatedAt',
+        'produto.created_at as prodCreatedAt',
+        'produto.descricao as produtoDescricao',
         'ingrediente.id as ingredienteId',
+        'ingrediente.nome as ingredienteNome',
+        'ingrediente.precoRelativo',
+        'ingrediente.estoqueMinimo as ingredEstoqueMin',
+        'ingrediente.estoqueAtual as ingredEstoqueAtual',
+        'ingrediente.categoriaId as ingredCategoriaId',
+        'ingrediente.createdAt as ingredCreatedAt',
+        'ingrediente.updatedAt as ingredUpdatedAt',
+        'ingrediente.deletedAt as ingredDeletedAt',
         'tamanho.id as tamanhoId',
-        'produto.*',
-        'pizza_ingrediente.*',
-        'ingrediente.*',
-        'tamanho.*'
+        'tamanho.tamanho',
+        'tamanho.createdAt as tamanhoCreatedAt',
+        'tamanho.updatedAt as tamanhoUpdatedAt',
+        'tamanho.deletedAt as tamanhoDeletedAt'
     ]
 
     const params = [{
-        field: 'produtoId',
+        field: 'prodId',
         value: query.produtoId
     }];
     

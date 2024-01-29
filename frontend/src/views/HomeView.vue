@@ -1,5 +1,5 @@
 <template>
-  <div>  
+  <div >  
     <div class="all-content d-flex">
       <Sidebar />
       <div class="column d-flex">
@@ -71,6 +71,7 @@ export default {
       display: flex;
       width: 100%;
       height: 100%;
+      justify-content: center;
   }
 
     .column {

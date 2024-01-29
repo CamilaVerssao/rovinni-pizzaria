@@ -43,7 +43,7 @@
                 const data = (await Axios.get('/pizza_ingrediente')).data;
                 this.pizzaIngred = data;
             },
-            async getCusto(produtoId) {
+            getCusto(produtoId) {
                 if (!this.pizzaIngred) {
                     return "Array de pizzaIngred não encontrado";
                 }
@@ -58,17 +58,19 @@
 
                 if (this.pizzaIngred.length > 0) {
                     ingredientsForProduct.forEach(item => {
-                        if(item.tamanhoId === 1) {
-                            custoTotal = item.precoRelativo * 2;
-                        }
-                        else if(item.tamanhoId === 2){
-                            custoTotal = item.precoRelativo * 3;
-                        }
-                        else if(item.tamanhoId === 3){
-                            custoTotal = item.precoRelativo * 4;
-                        }
-                        else {
-                            custoTotal = item.precoRelativo * 5;
+                        switch(item.tamanhoId) {
+                            case 1:
+                                custoTotal = item.precoRelativo * 2;
+                                break;
+                            case 2:
+                                custoTotal = item.precoRelativo * 3;
+                                break;
+                            case 3:
+                                custoTotal = item.precoRelativo * 4;
+                                break;
+                            case 4:
+                                custoTotal = item.precoRelativo * 5;
+                                break;
                         }
                     });
                 }
