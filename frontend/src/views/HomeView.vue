@@ -5,19 +5,18 @@
       <div class="column d-flex">
         <div class="top mt-5">
           <div class="title-field d-flex mx-5">
-              <Title :title="title"/> <div id="search-bar" class="d-flex">
-            <div class="input-group" id="search-input">
-              <span class="input-group-text" id="basic-addon1"><font-awesome-icon :icon="['fas', 'magnifying-glass']" style="color: #000000;" /></span>
-              <input type="text" class="form-control" placeholder="Pesquise aqui" aria-label="Username" aria-describedby="basic-addon1" v-model="palavra" />       
-            </div>
-            <button @click="this.$router.push('/new-product')" id="add-btn"><font-awesome-icon :icon="['fas', 'circle-plus']" size="xl" style="color: #000000;" /> Novo</button>
+              <Title :title="title"/> 
+              <div id="search-bar" class="d-flex">
+                <div class="input-group" id="search-input">
+                  <span class="input-group-text" id="basic-addon1"><font-awesome-icon :icon="['fas', 'magnifying-glass']" style="color: #000000;" /></span>
+                  <input type="text" class="form-control" placeholder="Pesquise aqui" aria-label="Username" aria-describedby="basic-addon1" v-model="palavra" />       
+                </div>
+                <button @click="this.$router.push('/new-product')" id="add-btn"><font-awesome-icon :icon="['fas', 'circle-plus']" size="xl" style="color: #000000;" /> Novo</button>
+              </div>
           </div>
-          </div>
-         
         </div>
-          <div class="cards  ">
-              <ItemCard :produtos="produto" :detailHref="'/product-details'" :palavra="palavra" />
-
+          <div class="cards">
+            <ItemCard :produtos="produto" :detailHref="'/product-details'" :palavra="palavra" />
           </div>
       </div>
     </div>       
@@ -64,19 +63,14 @@ export default {
 
 <style>
 
-  .top {
-  }
-
   .title-field {
     height: fit-content;
   }
 
   .all-content {
       display: flex;
-      width: fit-content;
-      height: fit-content;
-      max-width: 100%;
-      max-height: 100%;
+      width: 100%;
+      height: 100%;
   }
 
     .column {
@@ -124,12 +118,9 @@ export default {
     }
 
     .cards {
-      max-height: 60vh;
+      max-height: 80vh;
       height: fit-content;
-      width: fit-content;
-      max-width: 90vw;
-      max-height: 70vh;
-      display: flex;
+      max-width: 100%;
     }
 
 </style>

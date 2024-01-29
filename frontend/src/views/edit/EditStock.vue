@@ -1,20 +1,20 @@
 <template>
     <div>   
-        <div class="all-content">
+        <div class="all-content d-flex w-100 justify-content-center">
             <Sidebar />
-            <div class="column mx-5">
-                <Title class="mt-5" :title="title" />
+            <div class="column d-flex w-100 mx-5 mt-5 flex-column">
+                <Title :title="title" />
                 <div id="all-content">       
-                    <div class="product-field">
+                    <div class="product-field d-flex flex-column w-100 mt-4">
                         <h1 class="field-title">Estoque mínimo</h1>
                         <input type="number" class="form-control" placeholder="Digite o preço unitário" v-model="estoqueMinimo">
                     </div>
-                    <div class="product-field">
+                    <div class="product-field d-flex flex-column w-100 mt-4">
                         <h1 class="field-title">Estoque atual</h1>
                         <input type="number" class="form-control" placeholder="Digite o preço unitário" v-model="estoqueAtual">
                     </div>
                 </div>
-                <div id="buttons" class="pt-4">
+                <div id="buttons" class="pt-4 d-flex position-fixed gap-4">
                     <button class="btn btn-danger" @click="this.$router.push('/stock-list')">Voltar</button>
                     <button class="btn btn-success" @click="createStock()">Salvar</button>
                 </div>
@@ -75,42 +75,25 @@
 
 <style lang="scss" scoped>
 
-        #all-content {
-            width: 80vw;
-            flex-wrap: wrap;        
-        }
+    .product-field {
+        max-width: 30%;
+    }
 
-        .column {
-            display: flex;
-            margin: 0 auto;
-            flex-direction: column;
-        }
+    .product-field textarea {
+        width: 40vw;
+    }
 
-        #title { 
-            margin-left: 300px;
-            font-size: 25px;
-            margin-top: 30px;
-            height: fit-content;     
-        }
+    .field-title {
+        font-size: 2.3vh;
+    }
 
-        .product-field {
-            display: flex;
-            flex-direction: column;
-            max-width: 600px;
-            width: 100%;
-            margin-top: 50px;
-        }
+    #buttons {
+        bottom: 5vh;
+        right: 5vh;
+    }
 
-        .field-title {
-            font-size: 25px;
-        }
-
-        #buttons {
-            position: fixed;
-            display: flex;
-            bottom: 40px;
-            right: 40px;
-            gap: 25px;
-        }
+    .form-control {
+        min-width: 200px;
+    }
 
 </style>

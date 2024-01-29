@@ -1,21 +1,22 @@
 <template>
-    <div class="all-content ">
-        <div id="card-content" v-for="produto in filterProduct" :key="produto.produtoId" @click="this.$emit('produtoClicado', produto)" > <!--se o card for bebida, não aparece a lista de ingredientes para editar-->
-            <div class="card-img" @click="goToInfo(produto.produtoId)"></div>
-            <div class="card-info" @click="goToInfo(produto.produtoId)">
-                <h1>{{ produto.produtoNome }} {{ produto.tamanho }}</h1>
-                <h2>R$ {{ produto.preco }}</h2>
+    <div class="all d-flex justify-content-center mt-5">
+        <div class="all-content d-flex">
+            <div id="card-content" v-for="produto in filterProduct" :key="produto.produtoId" @click="this.$emit('produtoClicado', produto)"> 
+                <div class="card-info" @click="goToInfo(produto.produtoId)">
+                    <h1>{{ produto.produtoNome }} {{ produto.tamanho }}</h1>
+                    <h2>R$ {{ produto.preco }}</h2>
+                </div>
+                <div class="buttons">
+                    <div id="trashIcon">
+                        <button @click="deleteProduct(produto.produtoId)">
+                            <font-awesome-icon :icon="['fas', 'trash']" style="color: #000000;" />
+                        </button>
+                    </div>
+                    <div id="editIcon">
+                        <EditButton :href="`/#/edit-product/${produto.produtoId}`" />
+                    </div>
+                </div>  
             </div>
-            <div class="buttons">
-                <div id="trashIcon">
-                    <button @click="deleteProduct(produto.produtoId)">
-                        <font-awesome-icon :icon="['fas', 'trash']" style="color: #000000;" />
-                    </button>
-                </div>
-                <div id="editIcon">
-                    <EditButton :href="`/#/edit-product/${produto.produtoId}`" />
-                </div>
-            </div>  
         </div>
     </div>
 </template>
@@ -95,8 +96,12 @@
 <style lang="scss" scoped>
 
     .all-content { 
-        flex-wrap: wrap;
+        width: 90%;
+        height: fit-content;
+        max-height: 80vh;
         overflow-y: auto;
+        flex-flow: row wrap;
+        gap: 3rem;
     }
 
     #card-content {
@@ -110,6 +115,7 @@
         background: #fff;
         padding: 8px;
         padding-bottom: 70px;
+        
     }
 
     #card-content:hover {

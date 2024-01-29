@@ -25,33 +25,32 @@
 <style lang="scss" scoped>
 
     #search-input {
-        width: 100%;
-        max-width: 400px;
-        max-height: 40px;
-        height: 100%;
+        width: 25%;
+        height: 5%;
     }
 
     #search-bar {
         margin: 0 auto;
         width: 30vw;
-        height: 110px;
-        gap: 30px;
+        height: 25%;
+        gap: 3rem;
         padding: 0;
     }
 
     #search-bar h1 {
-        font-size: 25px;       
+        font-size: 2.5vw;       
     }
 
     #search-bar button {
         background-color: transparent;
         border: 1px solid #DEE2E6;
         border-radius: 10px;  
-        height: 40px;
+        height: 2rem;
     }
 
     #search-bar button:hover {
         background-color: #c6c6c6;
         border: 1px solid rgb(169, 169, 169);
     }
+
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div>
-      <div id="all-content">
+      <div id="all-content" class="mt-5">
           <h1 id="itens-number"><font-awesome-icon :icon="['fas', 'cart-shopping']" style="color: #000000;" /> {{ numItens }} itens</h1>
           <div class="top-right">
               <div class="item-row d-flex right-position" v-for="carrinho in filterCart" :key="carrinho.id"> <!--adicionar para cada entrada pelo botão lateral dos cards-->
@@ -83,7 +83,7 @@ export default {
 
   #all-content {
       width: 28vw;
-      margin-top: 50px;
+      height: 100%;
   }
 
   #itens-number {
@@ -103,11 +103,6 @@ export default {
 
   .item-row p {
       width: fit-content;
-  }
-
-  .top-right {
-      height: fit-content;
-      max-height: 200px;
   }
 
   .input-qty {

@@ -2,8 +2,8 @@
     <div>
         <div class="all-content">
             <Sidebar />
-            <div class="column mx-5 mt-5">
-                <Title :title="title" id="titulo" />
+            <div class="column">
+                <Title :title="title" id="titulo" class="mx-5 mt-5" />
                 <div class="content d-flex">
                     <OrderSummary />
                     <div class="form-of-payment">
@@ -38,7 +38,7 @@
                     </div>
                 </div>
             </div>
-            <div id="buttons" class="pt-4">        
+            <div id="buttons" class="pt-4 d-flex position-fixed gap-4">        
                 <button class="btn btn-danger" @click="cancelarPedido">Voltar</button>
                 <button class="btn btn-success" @click="confirmPayment">Confirmar pagamento</button>
             </div>  
@@ -193,29 +193,27 @@
         width: 100%;
     }
 
-    .content {
-        display: flex;
-        margin: 0 auto;
-        justify-content: space-evenly;
-        gap: 400px;
-        align-items: center;
+    .column {
         height: 100%;
-        margin-top: -80px;
     }
 
-    .form-of-payment { 
-        margin-top: 40px;
+    .content {
+        display: flex;
+        justify-content: space-evenly;
+        gap: 10vw;
+        align-items: center;
+        height: fit-content;
     }
 
     .form-of-payment h1 {
-        margin-bottom: 20px;
+        margin-bottom: 3vh;
     }
 
     .options button {
         background-color: transparent;
         border: none;
         width: fit-content;
-        font-size: 17px;
+        font-size: 1.7vh;
         transition: all 0.4s;
 
         &:hover {
@@ -225,24 +223,17 @@
 
     .options {
         flex-direction: column;
-
     }
-    .icons {
-        margin-top: 5px;
-        width: fit-content;
 
-    }
+
 
     #title-right {
-        font-size: 25px;   
+        font-size: 2.3vh;   
     }
 
     #buttons {
-        position: fixed;
-        display: flex;
-        bottom: 40px;
-        right: 40px;
-        gap: 25px;
+        bottom: 5vh;
+        right: 5vh;
     }
 
 </style>

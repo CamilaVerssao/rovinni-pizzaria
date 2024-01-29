@@ -1,32 +1,30 @@
 <template>
     <div>
-        <div class="all-content">
+        <div class="all-content d-flex w-100 justify-content-center">
             <Sidebar />
-            <div class="column mx-5">
-                <div class="top">
-                    <Title :title="this.editing ? 'Editar Categoria' : 'Nova Categoria'"/>
-                </div>
+            <div class="column d-flex w-100 mx-5 mt-5 flex-column">
+                <Title :title="this.editing ? 'Editar Categoria' : 'Nova Categoria'"/>
                 <div id="all-content">
-                    <div class="row d-flex">
-                        <div class="product-field">
+                    <div class="row d-flex w-100">
+                        <div class="product-field d-flex flex-column w-100 mt-4">
                             <h1 class="field-title">
                                 Nome da Categoria
                             </h1>
                             <input type="text" :placeholder="this.editing ? filterCategory(this.paramId)?.nome ?? '' : 'Digite a categoria'" class="form-control" v-model="categoria">
                         </div>
-                        <div class="product-field">
-                            <div class="form-check d-flex" id="check-ativo">
+                        <div class="product-field d-flex flex-column w-100 mt-4">
+                            <div class="form-check d-flex gap-3 align-content-center" id="check-ativo">
                                 <h1 class="field-title">Ativo</h1>
                                 <CheckBox :isDisabled="false" :isChecked="this.editing ? filterCategory(this.paramId)?.ativo ?? '' : false" @click="this.ativo = !this.ativo" />
                             </div>
                         </div>    
                     </div>
-                    <div class="product-field">
+                    <div class="product-field d-flex flex-column w-100 mt-4">
                         <h1 class="field-title">Descrição</h1>
                         <textarea name="desc-field" id="desc-field" cols="30" rows="10" :placeholder="this.editing ? filterCategory(this.paramId)?.descricao ?? '' : 'Digite a categoria'" v-model="descricao"></textarea>
                     </div>
                 </div> 
-                <div id="buttons" class="pt-4">
+                <div id="buttons" class="pt-4 d-flex position-fixed gap-4">
                     <button class="btn btn-danger" @click="this.$router.push('/category-list')">Voltar</button>
                     <button class="btn btn-success" @click="createCategory()">Salvar</button>
                 </div>
@@ -119,65 +117,29 @@
 
 <style lang="scss" scoped>
 
-    .all-content {
-        width: 100%;
-        margin: 0 auto;
-        display: flex;
-    }
-
-    .column {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .row {
-        display: flex;
-        width: 100%;
-    }
-
     .product-field {
-        display: flex;
-        flex-direction: column;
-        max-width: 600px;
-        width: 100%;
-        margin-top: 30px;
-    }
-
-    .product-field #desc-field {
-        height: 100px;
-        overflow-y: auto;
-        border: 1px solid #DEE2E6;
-        border-radius: 10px;
+        max-width: 30%;
     }
 
     .product-field textarea {
-        width: 750px;
+        width: 40vw;
     }
 
     .field-title {
-        font-size: 25px;
+        font-size: 2.3vh;
     }
 
     #check-ativo {
-        gap: 50px;
-        align-items: center;
         margin-top: 40px;
     }
 
-    #title { 
-        margin-left: 300px;
-        font-size: 25px;
-        margin-top: 30px;
-        height: fit-content;     
+    #buttons {
+        bottom: 5vh;
+        right: 5vh;
     }
 
-    #buttons {
-        position: fixed;
-        display: flex;
-        bottom: 40px;
-        right: 40px;
-        gap: 25px;
+    .form-control {
+        min-width: 200px;
     }
 
 </style>

@@ -66,10 +66,6 @@
         right: 40px;
     }
 
-    .titulo {
-
-    }
-  
    .all-content .column {
         flex-direction: column;
         width: 100vw;

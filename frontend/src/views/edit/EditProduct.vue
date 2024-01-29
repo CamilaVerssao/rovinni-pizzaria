@@ -1,13 +1,13 @@
 <template>
     <div> 
-        <div class="all-content">
+        <div class="all-content d-flex w-100 justify-content-center">
             <Sidebar />  
-            <div class="top">
+            <div class="top mt-5 ">
                 <Title  :title="this.editing ? 'Editar Produto' : 'Novo Produto'" />
             </div>           
-            <div class="column">
+            <div class="column d-flex w-100 h-100 flex-column">
                 <div id="all-fields">
-                    <div class="content-left" >
+                    <div class="content-left d-flex gap-2 flex-wrap flex-column justify-content-center align-items-center" >
                         <div id="select-ingredient"  v-if="this.selectedTipo !== null && this.selectedTipo !== 'Bebida'">
                             <select class="form-select" v-model="selected">
                                 <option value="" disabled selected hidden>Selecione</option>
@@ -27,7 +27,7 @@
                     </div>
                 </div>
 
-                <div id="content-right" class="d-grid gap-4">
+                <div id="content-right" class="d-grid gap-4 w-100 justify-content-center">
                     <div class="row d-flex">
                         <div class="product-field">
                             <h1 class="field-title">
@@ -115,7 +115,7 @@
                         </h1>
                         <textarea name="desc-field" id="desc-field" cols="30" rows="10" :placeholder="this.editing ? filterProduct(this.paramId)?.produtoDescricao ?? '' : 'Digite a descrição'"  v-model="descricao"></textarea>
                     </div>
-                    <div id="buttons" class="pt-4">
+                    <div id="buttons" class="pt-4 d-flex position-fixed gap-4">
                         <button class="btn btn-danger" @click="this.$router.push('/')">Voltar</button>
                         <button class="btn btn-success" @click="checkAction()">Salvar</button>
                     </div>      
@@ -248,7 +248,6 @@
                 
 
                 const createdProduct = (await Axios.put(`/produto/${id}`, data)).data;
-                console.log(createdProduct)
                 const productId = createdProduct.id;
 
 
@@ -368,50 +367,24 @@
 
     .top {
         margin-left: 50px;
-    }
-
-    .all-content {
-        display: flex;
-        width: 100%;
-        margin: 0 auto;
+        width: fit-content;
+        height: fit-content;
     }
 
     #all-fields {
         display: flex;
         width: 100%;
-        gap: 200px;
-    }
-
-    .column {
-        display: flex;
-        flex-direction: column;
-        margin-top: -50px;
-        justify-content: center;
-    }
-    
-    .content-left {
-        display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
-        gap: 16px;
-        align-items: center;
-        justify-content: center;
+        height: 100vh;
     }
 
     #title-field {
-        margin-left: 300px;
-        font-size: 25px;
-        margin-top: 30px;
+        font-size: 2.5vh;
         height: fit-content;       
     }
 
-    .content-left h1 {
-        margin-top: 40px;
-        font-size: 25px;
-    }
-
     .content-left select {
-        width: 200px;
+        width: 50%;
+        min-width: 200px;
     }
 
     #select-ingredient {
@@ -421,7 +394,6 @@
     #select-ingredient button {
         margin-left: 10px;
     }
-
 
     #list-ingredient {
         display: flex;
@@ -435,12 +407,11 @@
     }
 
     #content-right {
-        margin-top: 40px; 
-        width: 50vw;  
+        margin: auto 0;
     }
 
     .product-field {
-        width: 470px;
+        width: 50%;
     }
 
     .row {
@@ -448,56 +419,12 @@
     }
 
     .field-title {
-        font-size: 25px;
-    }
-
-    #check-ativo {
-        display: flex;
-        width: 150px;
-        justify-content: space-between;
-        align-items: center;
-        padding: 26px 0 0 0;
-    }
-
-    #discount-area {
-        padding-left: 30px;
-        height: fit-content;
-        width: 600px;
-    }
-
-    #discount-area p {
-        padding: 20px 0 5px 0;
-        border-bottom: 1px solid black;
-    }
-
-    #discount-area button {
-        padding: 5px;
-        background-color: #ee991a;
-        color: white;
-    }
-
-    #gerar-cupom {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    #gerar-cupom input {
-        width: 430px;
+        font-size: 2.3vh;
     }
 
     #buttons {
-        position: fixed;
-        display: flex;
-        bottom: 40px;
-        right: 40px;
-        gap: 25px;
-    }
-
-    .product-field #desc-field {
-        height: 100px;
-        overflow-y: auto;
-        border: 1px solid #DEE2E6;
-        border-radius: 10px;
+        bottom: 5vh;
+        right: 5vh;
     }
 
     .product-field textarea {
