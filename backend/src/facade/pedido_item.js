@@ -5,7 +5,6 @@ const get = async (query) => {
     const fields = [
         'pedidoItem.id as pedidoItemId',
         'pedidoItem.quantidade',
-        'pedidoItem.prodId as ',
         'produto.id as produtoId',
         'produto.nome as produtoNome',
         'produto. preco',

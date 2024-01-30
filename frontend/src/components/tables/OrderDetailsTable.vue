@@ -70,22 +70,23 @@
             items: null
         }),
         methods: {
-            async getOrderById(id) {
-                const data = (await Axios.get(`/pedido/${id}`)).data;
-                this.orders = data;
-            },
-            async getPedidoItems(id) {
-                const data = (await Axios.get(`/pedido_item?pedido=${id}`)).data;
-                this.items = data;
+            async getItems(id) {
+                const promises = [
+                    Axios.get(`/pedido/${id}`), 
+                    Axios.get(`/pedido_item?pedido=${id}`)
+                ];
+
+                const data = await Promise.all(promises);
+                this.orders = data[0].data;
+                this.items = data[1].data;
+
             },
             formatData(data) {
                 return moment(data).format('DD/MM/YYYY');
             }
         },
         async mounted() {
-            this.paramId = this.$route.params.id;
-            await this.getOrderById(this.paramId);
-            await this.getPedidoItems(this.paramId);
+            await this.getItems(this.$route.params.id);
         }
     }
 </script>

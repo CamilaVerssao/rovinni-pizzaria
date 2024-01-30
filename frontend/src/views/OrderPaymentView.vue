@@ -94,19 +94,18 @@
                     cliente_id: 1
                 }
 
-                if(this.payment) {
+                if(this.payment) {                 
+
                     const pedido = (await Axios.post('/pedido', data)).data;
                     const pedidoId = pedido.id;
                     const promises = [];
 
                     for(let i = 0; i < this.cart.length; i++) {
-                        const productId = this.cart[i];
+                        const productId = this.cart[i];                    
                         const productData = JSON.parse(sessionStorage.getItem(productId));
-                        const estoqueAtualProd = (await Axios.get(`/pizza_ingrediente?produtoId=${productId}`)).data.ingredEstoqueAtual;
 
-                        const produto = (await Axios.get(`/pizza_ingrediente?produtoId=${productId}`)).data;
-                        const ingred = (await Axios.get(`/ingrediente?produtoId=${productId}`)).data;
-                        //console.log(produto)
+                        const ingredientes = (await Axios.get(`/pizza_ingrediente?produtoId=${productId}`)).data;
+                        console.log(ingredientes);
 
                         const cartItem = {
                             pedido_id: pedidoId,
@@ -114,11 +113,15 @@
                             quantidade: productData.quantity
                         }
 
-                        //console.log((await Axios.get(`/pizza_ingrediente/${productId}`)).data);
                         promises.push(Axios.post('/pedido_item', cartItem)); 
-                        console.log(promises.push(Axios.put(`/ingrediente/${produto.ingredienteId}`, { estoqueAtual: estoqueAtual - estoqueAtualProd })));
-                        //promises.push(Axios.put(`/pizza_ingrediente?produtoId=${productId}`, { estoqueAtual: estoqueAtual - quantidade }));
+
+                        for (let i = 0; i < ingredientes.length; i++) {
+                            promises.push(Axios.put(`/ingrediente/${ingredientes[i].ingredienteId}`, { estoqueAtual: ingredientes[i].ingredEstoqueAtual - ingredientes[i].quantidadeIngrediente }));
+                        }
+                        
                     }
+
+                    console.log( await Promise.all(promises));
 
                     await Promise.all(promises);
 

@@ -2,8 +2,8 @@
     <div class="all d-flex justify-content-center mt-5">
         <div class="all-content d-flex">
             <div id="card-content" v-for="produto in filterProduct" :key="produto.produtoId" @click="this.$emit('produtoClicado', produto)"> 
-                <div class="card-img"></div>
-                <div class="card-info" @click="goToInfo(produto.produtoId)">
+                <div class="card-info" @click="goToInfo(produto.produtoId)">                
+                    <div class="card-img"></div>
                     <h1>{{ produto.produtoNome }} {{ produto.tamanho }}</h1>
                     <h2>R$ {{ produto.preco }}</h2>
                 </div>
@@ -130,11 +130,11 @@
         background-image: url("https://diariodonordeste.verdesmares.com.br/image/contentid/policy:1.3277542:1663012513/Pizza%20de%20Calabresa.jpg?f=4x3&$p$f=eceb3e7");
         background-size: cover;
         background-position: center;
-        width: 100%;
-        height: 100%;
+        width: 92%;
+        height: 70%;
         display: grid;
         place-items: center;
-        position: relative;
+        position: absolute;
     }
 
     .card-info h1 {

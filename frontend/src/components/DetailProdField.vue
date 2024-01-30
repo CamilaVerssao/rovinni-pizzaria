@@ -6,7 +6,7 @@
                     <h1 class="field-title">
                         Nome do Produto
                     </h1>
-                    <input disabled type="text" :placeholder="this.produtoGetById.nome" class="form-control">
+                    <input disabled type="text" :placeholder="this.produtoGetById.produtoNome" class="form-control">
                 </div>
                 <div class="product-field">
                     <h1 class="field-title">

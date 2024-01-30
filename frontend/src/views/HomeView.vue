@@ -61,7 +61,7 @@ export default {
 }
 </script>
 
-<style>
+<style >
 
   .title-field {
     height: fit-content;

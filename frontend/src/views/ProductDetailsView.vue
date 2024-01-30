@@ -1,5 +1,5 @@
 <template>
-    <div class="all-content">
+    <div class="all-content w-100 d-flex justify-content-start">
         <Sidebar />
         <div class="teste">
             <Title class="mx-5 mt-5" :title="title" />
@@ -32,5 +32,6 @@
 </script>
 
 <style lang="scss" scoped>
+
 
 </style>

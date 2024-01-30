@@ -56,7 +56,6 @@
                 const data = (await Axios.get('/produto?tipo=1')).data;
                 this.produtos = data;
                 this.stock = [ ...this.ingredientes, ...this.produtos ];
-                console.log(this.stock)
             },
         },
         computed: {
@@ -67,6 +66,14 @@
 
                 const lowerCasePalavra = this.palavra.toLowerCase();
                 
+                for(let i = 0; i < this.stock.length; i++) {
+                    if(this.stock[i].produtoNome) {
+                        this.stock[i].nome = this.stock[i].produtoNome;
+                        delete this.stock[i].produtoNome;
+                    }
+                }
+
+
                 return this.stock.filter(est =>
                     est.nome.toLowerCase().includes(lowerCasePalavra)
                 );
