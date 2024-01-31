@@ -14,7 +14,7 @@
                     <td>{{ lucro.produtoNome }} {{ lucro.tamanho }}</td>     
                     <td>R$ {{ lucro.custo == null ?  getCusto(lucro.produtoId) : lucro.custo }}</td>
                     <td>{{ lucro.volumeVendas }}</td>
-                    <td>R$ {{ lucro.custo == null ? (lucro.preco * lucro.volumeVendas) - (getCusto(lucro.produtoId) * lucro.produtoEstoqueAtual) : (lucro.preco * lucro.volumeVendas) - (lucro.custo * lucro.estoqueAtual) }}</td>
+                    <td>R$ {{ lucro.custo == null ? (lucro.preco * lucro.volumeVendas) - (getCusto(lucro.produtoId)) : (lucro.preco * lucro.volumeVendas) - (lucro.custo * lucro.produtoEstoqueAtual) }}</td>
                 </tr>
             </tbody>
         </table>

@@ -1,5 +1,5 @@
 <template>
-    <div class="teste d-flex justify-content-center mt-5">
+    <div class="teste d-flex justify-content-center">
         <div class="all-content d-flex">
             <div id="card-content" v-for="produto in filterProduct" :key="produto.produtoId" @click="addItemToCart(produto)">
                 <div class="card-img"></div>

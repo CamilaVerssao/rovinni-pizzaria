@@ -1,10 +1,11 @@
 <template>
     <div>
         <div class="all-content">
-            <Sidebar />
+            <Sidebar />    
+            <div class="teste position-relative w-100">        
+            <Title :title="title" id="titulo" class="mx-5 mt-5 position-absolute" />
             <div class="column">
-                <Title :title="title" id="titulo" class="mx-5 mt-5" />
-                <div class="content d-flex">
+                <div class="content d-flex justify-content-center">
                     <OrderSummary />
                     <div class="form-of-payment">
                         <h1 id="title-right">Forma de pagamento</h1>
@@ -41,7 +42,8 @@
             <div id="buttons" class="pt-4 d-flex position-fixed gap-4">        
                 <button class="btn btn-danger" @click="cancelarPedido">Voltar</button>
                 <button class="btn btn-success" @click="confirmPayment">Confirmar pagamento</button>
-            </div>  
+            </div>
+        </div>      
         </div>
     </div>
 </template>
@@ -203,7 +205,9 @@
     }
 
     .column {
-        height: 100%;
+        height: 100vh;
+        align-items: center;
+        justify-content: center;
     }
 
     .content {
@@ -212,6 +216,11 @@
         gap: 10vw;
         align-items: center;
         height: fit-content;
+    }
+
+    #titulo {
+        height: fit-content;
+        left: 0;
     }
 
     .form-of-payment h1 {

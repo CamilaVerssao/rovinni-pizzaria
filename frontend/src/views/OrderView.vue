@@ -21,7 +21,7 @@
                             <ItemCardAdd :produtos="produto" :palavra="palavra" />
                         </div>
                         
-                        <div class="right-content w-50 d-flex justify-content-center">
+                        <div class="right-content d-flex w-50 justify-content-center">
                             <div class="right-side w-75 h-100">
                                 <h1 id="itens-number"><font-awesome-icon :icon="['fas', 'cart-shopping']" style="color: #000000;" /> {{ numItens }} itens</h1>
                                 <div class="top-right">
@@ -156,7 +156,6 @@
     height: fit-content;
     max-height: 70vh;
     flex-wrap: wrap;
-    gap: 30px;
   }
 
   #buttons {
@@ -183,7 +182,7 @@
         width: 100%;
     }
     .right-content {
-        width: 75vw;
+        width: 50%;
     }
 
     #search-input {

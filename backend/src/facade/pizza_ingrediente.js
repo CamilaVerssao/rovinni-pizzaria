@@ -6,6 +6,8 @@ const get = async (query) => {
         'pizzaIngrediente.quantidade as quantidadeIngrediente',
         'produto.id as produtoId',
         'produto.nome as produtoNome',
+        'produto.estoqueAtual as produtoEstoqueAtual',
+        'produto.estoqueMinimo as produtoEstoqueMinimo',
         'produto. preco',
         'produto.volumeVendas',
         'produto.custo',
@@ -32,10 +34,22 @@ const get = async (query) => {
         'tamanho.deletedAt as tamanhoDeletedAt'
     ]
 
-    const params = [{
-        field: 'prodId',
-        value: query.produtoId
-    }];
+    const params = [
+        {
+            field: 'prodId',
+            value: query.produtoId
+        },
+        {
+            field: 'tipoId',
+            value: query.tipo
+        },
+
+        {
+            field: 'prodId',
+            value: query.unique
+        },
+  
+];
     
     const join = [
         {
@@ -56,7 +70,8 @@ const get = async (query) => {
             type: 'leftJoin',
             tableName: 'tamanho'
         }
-    ];
+    ];        //console.log(params);
+
     return await db.get('pizza_ingrediente', params, join, fields);
 }
 const getById = async (id) => {
