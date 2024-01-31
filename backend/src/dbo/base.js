@@ -5,8 +5,13 @@ const get = async(tableName, params, joins, fields) => {
 
     if(params) {
         params.forEach(param => {
-            if(param.value && param.field){
+        
+            if(param.value && param.field && !param.unique){
                 baseQuery = baseQuery.where(param.field, param.value);
+            }
+            if(param.value == true) {
+                baseQuery = baseQuery.distinct(param.field);
+                console.log(baseQuery)
             }
         });
     }

@@ -416,7 +416,7 @@
     }
 
     .row {
-        width: 50vw;
+        width: 100%;
     }
 
     .field-title {
@@ -429,8 +429,7 @@
     }
 
     .product-field textarea {
-        width: 48vw;
+        width: 50vw;
     }
-    
 
 </style>

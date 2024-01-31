@@ -2,13 +2,17 @@
     <div>
         <div class="all-content"> 
             <Sidebar /> 
-            <Title class="mx-5 mt-5" :title="title" /> 
-            <div class="column">             
-                <PersonalizeOrder />
-                <div id="buttons" class="pt-4">            
-                    <button class="btn btn-danger" @click="this.$router.push('/order')">Voltar</button>
-                    <button class="btn btn-success" @click="this.$router.push('/order-payment')">Ir para pagamento  <font-awesome-icon :icon="['fas', 'chevron-right']" style="color: #ffffff;" /></button>
-                </div>
+                <div class="teste w-100 h-100">
+                    <Title class="titulo mx-5 mt-5" :title="title" /> 
+                    <div class="column mx-5 h-100 w-10 d-flex justify-content-center"> 
+                        <div class="both-sides d-flex justify-content-center">
+                            <PersonalizeOrder />
+                        </div>            
+                        <div id="buttons" class="pt-4">            
+                            <button class="btn btn-danger" @click="this.$router.push('/order')">Voltar</button>
+                            <button class="btn btn-success" @click="this.$router.push('/order-payment')">Ir para pagamento  <font-awesome-icon :icon="['fas', 'chevron-right']" style="color: #ffffff;" /></button>
+                        </div>
+                    </div> 
             </div>
         </div>
     </div>
@@ -51,10 +55,12 @@
 
    .column {
         display: flex;
-        flex-direction: column;
         margin: 0 auto;
         justify-content: center;
-        margin-left: -150px;
+   }
+
+   .titulo {
+        height: fit-content;
    }
 
 </style>

@@ -1,7 +1,7 @@
 <template>
-    <div>
-       <div id="all-content">
-        <div id="left-content">
+    <div class="h-100" >
+       <div id="all-content" >
+        <div class="left-content">
             <h1 id="add-pizza">Pizza
                 <button>
                     <font-awesome-icon :icon="['fas', 'circle-plus']" style="color: #000000;" />
@@ -26,7 +26,7 @@
             </div>
             <div class="row">
                 <p>Sabores</p>
-                <div class="check-ingredient d-flex" v-for="sabor in sabores" :key="sabor.id">
+                <div class="check-ingredient d-flex" v-for="sabor in sabores" :key="sabor.produtoId">
 
                     <div class="checkbox-field">
                         <input type="checkbox" :value="sabor" v-model="checkedProducts" @change="console.log(this.checkedProducts)" >
@@ -34,8 +34,8 @@
 
                     <p>{{ sabor.produtoNome }}</p>
                 </div>
-                <button class="pizzaAdd" @click="addToCart(this.checkedProducts)">Adicionar</button>
-            </div>
+            </div>                
+            <button class="pizzaAdd" @click="addToCart(this.checkedProducts)">Adicionar</button>
             <hr>
         </div>  
         <div id="right-content">
@@ -93,7 +93,7 @@
         },
         methods: {
             async getFlavors() {
-                const data = (await Axios.get('/produto?tipo=2')).data;
+                const data = (await Axios.get('/pizza_ingrediente?tipo=2&unique=true')).data;
                 this.sabores = data;
             },
             async getBebidas() {
@@ -129,7 +129,7 @@
                         console.log(this.pizzaCustom)
 
                         const produtoString = JSON.stringify(this.pizzaCustom);
-                        sessionStorage.setItem(produto.id, produtoString);
+                        sessionStorage.setItem(produto.produtoId, produtoString);
 
                          /*this.pizzaCustom.totalCart = this.checkedProducts
                             .filter(sabor => sabor.tamanhoId === selectedSize)
@@ -148,14 +148,6 @@
                 }
 
               
-            },
-            getCategoryName(id) {
-                if (!this.tamanhos || this.tamanhos.length === 0) {
-                    return "Tamanho não encontrado";
-                }
-
-                const size = this.tamanhos.find(size => size.tamanhoId === id);
-                return size ? size.tamanho : "";
             }
         },
         mounted() {
@@ -174,9 +166,8 @@
         display: flex;
     }
 
-    #left-content {
-        margin-left: 80px;
-        align-items: center;
+    .left-content {
+        width: fit-content;
     }
 
     #add-pizza {
@@ -202,7 +193,9 @@
 
     .row {
         align-items: center;
-        margin-bottom: 20px;
+        max-height: 18%;
+        height: fit-content;
+        overflow-y: auto;
     }
 
     .check-ingredient p  {
@@ -211,6 +204,10 @@
 
     #right-content h1 {
         font-size: 25px;
+    }
+
+    #right-content {
+        width: fit-content;
     }
 
     #pizza-orders {
