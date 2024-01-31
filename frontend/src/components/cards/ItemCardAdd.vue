@@ -1,11 +1,13 @@
 <template>
-    <div class="teste d-flex justify-content-center">
-        <div id="card-content" v-for="produto in filterProduct" :key="produto.produtoId" @click="addItemToCart(produto)">
-            <div class="card-img"></div>
-            <div class="card-info">
-                <h1>{{ produto.produtoNome }} {{ produto.tamanho }}</h1>
-                <h2>R$ {{ produto.preco }}</h2>
-            </div>
+    <div class="teste d-flex justify-content-center mt-5">
+        <div class="all-content d-flex">
+            <div id="card-content" v-for="produto in filterProduct" :key="produto.produtoId" @click="addItemToCart(produto)">
+                <div class="card-img"></div>
+                <div class="card-info">
+                    <h1>{{ produto.produtoNome }} {{ produto.tamanho }}</h1>
+                    <h2>R$ {{ produto.preco }}</h2>
+                </div>
+            </div> 
         </div>
     </div>
 </template>
@@ -69,6 +71,17 @@
 </script>
 
 <style lang="scss" scoped>
+
+    .all-content { 
+        width: 90%;
+        height: fit-content;
+        max-height: 70vh;
+        overflow-y: auto;
+        flex-flow: row wrap;
+        justify-content: flex-start;
+        gap: 2rem;
+        padding: 2vh;
+    }
 
     #card-content {
         position: relative;

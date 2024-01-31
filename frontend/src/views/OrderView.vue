@@ -155,7 +155,6 @@
     justify-content: center;
     height: fit-content;
     max-height: 70vh;
-    overflow-y: auto;
     flex-wrap: wrap;
     gap: 30px;
   }
