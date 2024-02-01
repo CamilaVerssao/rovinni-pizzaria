@@ -17,7 +17,7 @@
                     </div>
                     <div class="left-content justify-content-center d-flex align-items-center">
                         <div class="cards d-flex justify-content-center flex-column">                    
-                            <button @click="this.$router.push('/personalize-order')" id="personalize-btn" class="mb-3">Personalizar</button>
+                            <!-- <button @click="this.$router.push('/personalize-order')" id="personalize-btn" class="mb-3">Personalizar</button> -->
                             <ItemCardAdd :produtos="produto" :palavra="palavra" />
                         </div>
                         
